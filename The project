@@ -1,0 +1,73 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{Numerical solution of the SIR epidemic model using Euler and Runge-Kutta Methods}
+\author{Riley Marriott}
+\date{March 2026}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\tableofcontents{}
+
+\newpage
+\section{Abstract}
+Ordinary Differential Equations (ODEs) are used to model dynamic processes in many disciplines, including engineering, physics, and biology. In epidemiology, systems of ODEs are commonly employed to simulate the spread of infectious diseases within a population. However, many realistic models are nonlinear and do not admit simple analytical solutions, making numerical methods essential for approximating their system. Among the most widely used approaches are the Runge-Kutta (RK) methods, which offer improved accuracy compared to simpler methods such as Euler’s method. \newline{}\newline{}
+This paper investigates the performance of several numerical methods for solving ordinary differential equations, with a particular focus on the Euler method, the second-order Runge-Kutta method (RK2) and the fourth-order Runge-Kutta method (RK4). The methods are first applied to a simple ODE with a known analytical solution to evaluate convergence behaviour and global error as a function of step size. They are then applied to the nonlinear Susceptible-Infected-Recovered (SIR) epidemic model to simulate the spread of disease within a population. The numerical solutions are evaluated in terms of accuracy, stability, and computational efficiency, providing insight into the relative performance of each method when modelling complex real-world systems. The result highlights the trade-offs between numerical accuracy and computational cost, illustrating the advantages of higher order Runge-Kutta methods for modelling non-linear dynamics systems.
+
+
+\section{Introduction}
+
+This paper focuses on the numerical approximation of solutions to Ordinary Differential Equations (ODEs). ODEs are widely used to describe time-dependent systems across many disciplines, including engineering (e.g. fluid flow and heat transfer), physics (e.g. oscillatory motion), and biology (e.g. population dynamics and epidemiology). However, many real-world systems are nonlinear and coupled, and often do not admit closed-form analytical solutions. This limitation motivates the use of numerical methods to approximate system behaviour. \newline{}\newline{}
+In epidemiology, the spread of infectious disease within a population is inherently dynamic and of significant practical importance. Mathematical models are therefore essential tools for predicting outbreak behaviour, estimating peak infection levels, and informing public health decision-making. One of the most fundamental models is the Susceptible–Infected–Recovered (SIR) model, which partitions a population into three compartments: susceptible $S(t)$, infected $I(t)$, and recovered $R(t)$. Individuals transition between these compartments over time according to a system of nonlinear differential equations. \newline{}\newline{}
+Due to the nonlinear nature of the governing equations, analytical solutions to the SIR model are generally not available, necessitating the use of numerical approximation techniques. In this study, Euler’s method, the second-order Runge–Kutta method (RK2), and the fourth-order Runge–Kutta method (RK4) are implemented and compared. The performance of these methods is evaluated in terms of accuracy (via global error), stability, and computational efficiency, providing insight into their suitability for modelling nonlinear dynamical systems.
+
+\section{Theory}
+Mathematics/physics derivations of the equations, theoretical considerations, analytical results
+
+\section{Numerical Methods}
+Exposition of the algorithms (as pseudo-code or flowchart), numerical analysis of convergence rates, derivation of complexity
+
+\section{Examples and Applications}
+Demonstration of the algorithms’ correctness and performance through test cases, application to relevant cases to build research result
+
+\section{Conclusion}
+Short summary of findings and enumeration of prospective work
+
+\section{Extensions}
+Final statement about relevance and impact
+
+\section{Bibliography}
+List of references and sources of information that must be cited in main text
+
+\section{Appendix}
+
+\section{Notes}
+•	the main body consists of sections 2-6 (intro to conclusion) and must be between 1500-2500 words (that is the equivalent of a 3-5 pages essay). The Appendix can be as long as desired but it will not be graded. \newline{}
+•	the submitted file format must be a single PDF document. Jupyter Notebooks with extension .ipynb may be included as appendices (see below). Any other formats will be rejected and not be graded. \newline{}
+•	the article must contain at least two (2) figures with caption (description of what the figure conveys) and properly referenced in the main text.\newline{}
+•	any source code written to perform the numerical computations and to produce the article’s results.\newline{}
+•	the file format must either be .jl text files or Jupyter Notebook .ipynb.\newline{}
+•	no Julia packages other than Plots is allowed.\newline{}
+•	source code must be adequately documented.\newline{}
+•	source code must run without error.\newline{}
+•	it must be possible to run all computations on a standard laptop in a reasonable amount of time.\newline{}
+•	an authors declaration: a brief description of each author’s roles and contributions: the document must be signed by all members of the group.\newline{}
+
+\section{Marking}
+50 on the report’s content: \newline{}
+  -   20 on the mathematical substance, definitions, the correctness of derivations, technical explanations \newline{}
+   -  10 on the choice of examples/applications, appropriate use of figures, level of sophistication \newline{}
+   -  10 on the clarity, structure and story-line, motivation and context, conclusion and impact \newline{}
+   -  10 on novelty and experimentation \newline{}
+20 on the report’s form: \newline{}
+   -  10 for tidiness, neatness, appropriate use of fonts, typesetting of mathematics, symbols, etc. \newline{}
+   -  10 for visuals, figures and overall aesthetics. \newline{}
+30 about the source code: \newline{}
+    - 10 for code that runs correctly and produces desired results \newline{}
+    - 10 for level of sophistication, speed/efficiency considerations \newline{}
+   -  10 for readability, good coding style/practice and documentation \newline{}
+\end{document}
