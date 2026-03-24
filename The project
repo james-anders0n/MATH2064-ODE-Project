@@ -37,6 +37,7 @@ where $f(t,y)$ is a known function with $y(t)$ representing the unknown solution
 In many practical applications, especially when $f(t,y)$ is non-linear, analyatical solutions can be extremely difficult or impossible to obtain. Thus, the solution must be approximated by discretising time into steps of size $h$, producing a sequence of approximations for $\{y_n\}$ at discrete points $t_n = t_0 + nh$.
 
 \subsection{Derivation of Numerical Approximation Framework}
+
 To construct our model, we begin by integrating both sides of Equation (1) over a small interval $[t_n, t_{n+1}]$:
 \begin{equation}
 y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f(t,y(t)) \,dt
@@ -44,6 +45,7 @@ y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f(t,y(t)) \,dt
 This integral is not analyatical, as y(t) is known. Thus the challenge lies in approximating the integral, in which we will explore various methods of doing so - Euler's Method, RK2 and RK4. These methods differ greatly in their levels of accuracy of this approximation and their computational cost.
 
 \subsection{Euler's Method}
+
 The simplest approach of approximation is Euler's method. 
 To begin with, we approximate $f(t,y)$ as constant over the interval, using its value at the beginning of the step:
 \begin{equation}
@@ -54,10 +56,15 @@ Subsituting into Equation (2) gives Euler's method:
 \begin{equation}
 y_{n+1} = y_n + h f(t_n, y_n)
 \end{equation}
-
-
+The solution is approximated by assuming that the slope remains constant over each time step, using the derivative evaluated at the beginning of the respective interval. Geometrically, this corresponds to advancing the solution along the tangent line at $(t_n, y_n)$. While this approach is simple and computationally inexpensive, it fails to consider the curvature in the solution, leading to the quite rapid accumulation of error over time. Consequently, Euler’s method is only first-order accurate and requires sufficiently small step sizes to maintain stability and accuracy.
 
 \subsubsection{Error Analysis of Euler's Method}
+
+Using a Taylor series expansion of the true solution,
+\begin{equation}
+y(t_{n+1}) = y(t_n) + h y'(t_n) + \frac{h^2}{2} y''(\xi),
+\end{equation}
+for some $\xi \in [t_n, t_{n+1}]$, we see that Euler's method neglects higher-order terms. The local truncation error is therefore $\mathcal{O}(h^2)$, leading to a global error of $\mathcal{O}(h)$.
 
 \subsection{Runge--Kutta Methods}
 
