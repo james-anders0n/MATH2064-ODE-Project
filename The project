@@ -66,8 +66,8 @@ y(t_{n+1}) = y(t_n) + h y'(t_n) + \frac{h^2}{2} y''(\xi),
 \end{equation}
 for some $\xi \in [t_n, t_{n+1}]$, we see that Euler's method neglects higher-order terms. The local truncation error is therefore $\mathcal{O}(h^2)$, leading to a global error of $\mathcal{O}(h)$.
 
-\subsection{Runge--Kutta Methods}
-
+\subsection{Runge-Kutta Methods}
+Generally, Runge-Kutta methods improve accuracy by evaluating $f(t,y)$ at multiple points within each time step, providing a more accurate approxmiation of the integral in Equation(2).
 \subsubsection{Second-Order Runge--Kutta Method (RK2)}
 
 \subsubsection{Error Analysis of RK2}
@@ -76,7 +76,22 @@ for some $\xi \in [t_n, t_{n+1}]$, we see that Euler's method neglects higher-or
 
 \subsubsection{Error Analysis of RK4}
 
-\subsection{Derivation of the SIR Model}
+\subsection{The SIR Model}
+
+The Susceptible–Infected–Recovered (SIR) model describes the spread of infectious disease within a closed population. The total population, $N$ is divided into three groups:
+\begin{itemize}
+    \item $S(t)$: susceptible individuals,
+    \item $I(t)$: infected individuals,
+    \item $R(t)$: recovered individuals.
+\end{itemize}
+The governing equations are
+\begin{align}
+\frac{dS}{dt} &= -\beta S I, \\
+\frac{dI}{dt} &= \beta S I - \gamma I, \\
+\frac{dR}{dt} &= \gamma I,
+\end{align}
+where $\beta$ is the transmission rate and $\gamma$ is the recovery rate.
+The term $\beta S I$ ariises from the assumption that the rate of infection is proportional to both the number of susceptible and infected individuals, reflecting random interactions within the population. The recovery term on the other hand, $\gamma I$, assumes that infected individuals recover at a constant rate.
 
 \subsection{Basic Reproduction Number}
 
