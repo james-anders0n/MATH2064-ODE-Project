@@ -2,7 +2,7 @@
 \usepackage{graphicx} % Required for inserting images
 
 \title{Numerical solution of the SIR epidemic model using Euler and Runge-Kutta Methods}
-\author{Riley Marriott}
+\author{Riley Marriott, James, James, Andre}
 \date{March 2026}
 
 \begin{document}
@@ -28,24 +28,53 @@ Due to the nonlinear nature of the governing equations, analytical solutions to 
 \section{Theory}
 
 \subsection{Ordinary Differential Equations}
+
 An Ordinary Differential Equation (ODE) describes the relationship between a function and its derivates with respect to a single, independent variable (in our case, time). A general first order Intial Value Problem (IVP) is given by:
 \begin{equation} 
 \frac{dy}{dt} = f(t,y) \quad y(t_0) = y_0,
 \end{equation}
 where $f(t,y)$ is a known function with $y(t)$ representing the unknown solution.
-
 In many practical applications, especially when $f(t,y)$ is non-linear, analyatical solutions can be extremely difficult or impossible to obtain. Thus, the solution must be approximated by discretising time into steps of size $h$, producing a sequence of approximations for $\{y_n\}$ at discrete points $t_n = t_0 + nh$.
+
 \subsection{Derivation of Numerical Approximation Framework}
+To construct our model, we begin by integrating both sides of Equation (1) over a small interval $[t_n, t_{n+1}]$:
+\begin{equation}
+y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f(t,y(t)) \,dt
+\end{equation}
+This integral is not analyatical, as y(t) is known. Thus the challenge lies in approximating the integral, in which we will explore various methods of doing so - Euler's Method, RK2 and RK4. These methods differ greatly in their levels of accuracy of this approximation and their computational cost.
+
 \subsection{Euler's Method}
+The simplest approach of approximation is Euler's method. 
+To begin with, we approximate $f(t,y)$ as constant over the interval, using its value at the beginning of the step:
+\begin{equation}
+\int_{t_n}^{t_{n+1}} f(t,y(t)) \, dt \approx h f(t_n, y_n).
+\end{equation}
+
+Subsituting into Equation (2) gives Euler's method:
+\begin{equation}
+y_{n+1} = y_n + h f(t_n, y_n)
+\end{equation}
+
+
+
 \subsubsection{Error Analysis of Euler's Method}
+
 \subsection{Runge--Kutta Methods}
+
 \subsubsection{Second-Order Runge--Kutta Method (RK2)}
+
 \subsubsection{Error Analysis of RK2}
+
 \subsubsection{Fourth-Order Runge--Kutta Method (RK4)}
+
 \subsubsection{Error Analysis of RK4}
+
 \subsection{Derivation of the SIR Model}
+
 \subsection{Basic Reproduction Number}
+
 \subsection{Conservation of Population}
+
 \subsection{Implications for Numerical Methods}
 
 
