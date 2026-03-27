@@ -5,20 +5,20 @@
 \contentsline {subsection}{\numberline {3.2}Derivation of Numerical Approximation Framework}{4}{}%
 \contentsline {subsection}{\numberline {3.3}Euler's Method}{4}{}%
 \contentsline {subsubsection}{\numberline {3.3.1}Error Analysis of Euler's Method}{5}{}%
-\contentsline {subsection}{\numberline {3.4}Runge--Kutta Methods}{5}{}%
+\contentsline {subsection}{\numberline {3.4}Runge-Kutta Methods}{5}{}%
 \contentsline {subsubsection}{\numberline {3.4.1}Second-Order Runge--Kutta Method (RK2)}{5}{}%
 \contentsline {subsubsection}{\numberline {3.4.2}Error Analysis of RK2}{5}{}%
 \contentsline {subsubsection}{\numberline {3.4.3}Fourth-Order Runge--Kutta Method (RK4)}{5}{}%
 \contentsline {subsubsection}{\numberline {3.4.4}Error Analysis of RK4}{5}{}%
-\contentsline {subsection}{\numberline {3.5}Derivation of the SIR Model}{5}{}%
-\contentsline {subsection}{\numberline {3.6}Basic Reproduction Number}{5}{}%
-\contentsline {subsection}{\numberline {3.7}Conservation of Population}{5}{}%
-\contentsline {subsection}{\numberline {3.8}Implications for Numerical Methods}{5}{}%
-\contentsline {section}{\numberline {4}Numerical Methods}{5}{}%
-\contentsline {section}{\numberline {5}Examples and Applications}{5}{}%
-\contentsline {section}{\numberline {6}Conclusion}{5}{}%
-\contentsline {section}{\numberline {7}Extensions}{5}{}%
-\contentsline {section}{\numberline {8}Bibliography}{5}{}%
-\contentsline {section}{\numberline {9}Appendix}{6}{}%
-\contentsline {section}{\numberline {10}Notes}{6}{}%
-\contentsline {section}{\numberline {11}Marking}{6}{}%
+\contentsline {subsection}{\numberline {3.5}The SIR Model}{5}{}%
+\contentsline {subsection}{\numberline {3.6}Basic Reproduction Number}{6}{}%
+\contentsline {subsection}{\numberline {3.7}Conservation of Population}{6}{}%
+\contentsline {subsection}{\numberline {3.8}Implications for Numerical Methods}{6}{}%
+\contentsline {section}{\numberline {4}Numerical Methods}{6}{}%
+\contentsline {section}{\numberline {5}Examples and Applications}{6}{}%
+\contentsline {section}{\numberline {6}Conclusion}{6}{}%
+\contentsline {section}{\numberline {7}Extensions}{6}{}%
+\contentsline {section}{\numberline {8}Bibliography}{6}{}%
+\contentsline {section}{\numberline {9}Appendix}{7}{}%
+\contentsline {section}{\numberline {10}Notes}{7}{}%
+\contentsline {section}{\numberline {11}Marking}{7}{}%

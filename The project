@@ -1,5 +1,6 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
+\usepackage{amsmath} % Required for align environment and advanced math
 
 \title{Numerical solution of the SIR epidemic model using Euler and Runge-Kutta Methods}
 \author{Riley Marriott, James, James, Andre}
@@ -32,7 +33,7 @@ Due to the nonlinear nature of the governing equations, analytical solutions to 
 An Ordinary Differential Equation (ODE) describes the relationship between a function and its derivates with respect to a single, independent variable (in our case, time). A general first order Intial Value Problem (IVP) is given by:
 \begin{equation} 
 \frac{dy}{dt} = f(t,y) \quad y(t_0) = y_0,
-\end{equation}
+\end{equation} 
 where $f(t,y)$ is a known function with $y(t)$ representing the unknown solution.
 In many practical applications, especially when $f(t,y)$ is non-linear, analyatical solutions can be extremely difficult or impossible to obtain. Thus, the solution must be approximated by discretising time into steps of size $h$, producing a sequence of approximations for $\{y_n\}$ at discrete points $t_n = t_0 + nh$.
 
@@ -69,8 +70,16 @@ for some $\xi \in [t_n, t_{n+1}]$, we see that Euler's method neglects higher-or
 \subsection{Runge-Kutta Methods}
 Generally, Runge-Kutta methods improve accuracy by evaluating $f(t,y)$ at multiple points within each time step, providing a more accurate approxmiation of the integral in Equation(2).
 \subsubsection{Second-Order Runge--Kutta Method (RK2)}
+A second order approximation can be obtained by averaging the slope over the interval:
+\begin{align}
+k_1 &= f(t_n, y_n), \\
+k_2 &= f(t_n + h, y_n + h k_1), \\
+y_{n+1} &= y_n + \frac{h}{2}(k_1 + k_2).
+\end{align}
+The RK2 method improves upon Euler's method by incorporating more information about the slope, both at the beginning and at the end of the interval. Effectively, this accounts for changes of the slope within the interval, allowing the method to better capture curvature in the solution. As a result, RK2 achieves second-order accuracy, and provides significantlty more accuracy then Euler's method with only a moderately more expensive computational cost.
 
 \subsubsection{Error Analysis of RK2}
+The RK2 method has a local truncation error of $\mathcal{O}(h^3)$ and a global error of $\mathcal{O}(h^2)$, essentially allowing larger step sizes to be used while maintaining decent accuracy.
 
 \subsubsection{Fourth-Order Runge--Kutta Method (RK4)}
 
