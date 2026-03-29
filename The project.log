@@ -1,9 +1,9 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.24)  24 MAR 2026 22:24
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.24)  27 MAR 2026 16:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
-**"/Users/rileymarriott/Desktop/MATH2064-ODE-Project/The project"
-(/Users/rileymarriott/Desktop/MATH2064-ODE-Project/The project
+**"The project"
+(./The project
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
 (/usr/local/texlive/2026/texmf-dist/tex/latex/base/article.cls
@@ -214,31 +214,31 @@ Underfull \hbox (badness 10000) in paragraph at lines 25--28
 
  []
 
-[3] [4] [5{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super
--ts1.enc}]
-Underfull \hbox (badness 10000) in paragraph at lines 122--132
+[3] [4] [5] [6{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-s
+uper-ts1.enc}] [7]
+Underfull \hbox (badness 10000) in paragraph at lines 156--166
 
  []
 
-[6]
-Underfull \hbox (badness 10000) in paragraph at lines 134--146
+[8]
+Underfull \hbox (badness 10000) in paragraph at lines 168--180
 
  []
 
-[7] (./The project.aux)
+[9] (./The project.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 2612 strings out of 467525
- 41750 string characters out of 5418982
- 450982 words of memory out of 5000000
+ 2611 strings out of 467525
+ 41602 string characters out of 5418982
+ 452982 words of memory out of 5000000
  31503 multiletter control sequences out of 15000+600000
  633439 words of font info for 60 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 59i,8n,67p,1019b,201s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 59i,9n,67p,969b,201s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb
 ></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb>
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
@@ -253,10 +253,10 @@ live/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texliv
 e/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive
 /2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2
 026/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on "The project.pdf" (7 pages, 174109 bytes).
+Output written on "The project.pdf" (9 pages, 179788 bytes).
 PDF statistics:
- 99 PDF objects out of 1000 (max. 8388607)
- 61 compressed objects within 1 object stream
+ 105 PDF objects out of 1000 (max. 8388607)
+ 65 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
