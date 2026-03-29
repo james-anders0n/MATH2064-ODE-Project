@@ -1,6 +1,8 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
 \usepackage{amsmath} % Required for align environment and advanced math
+\usepackage{tikz}
+\usetikzlibrary{shapes.geometric, arrows}
 
 \title{Numerical solution of the SIR epidemic model using Euler and Runge-Kutta Methods}
 \author{Riley Marriott, James, James, Andre}
@@ -137,6 +139,322 @@ The SIR system is nonlinear and coupled, making it very sensitive to numerical e
 
 \section{Numerical Methods}
 Exposition of the algorithms (as pseudo-code or flowchart), numerical analysis of convergence rates, derivation of complexity
+\subsection{Second-Order Runge--Kutta Method (RK2)}
+
+The second-order Runge--Kutta (RK2) method improves upon Euler’s method by incorporating information about the slope at multiple points within each time step, rather than relying solely on the slope at the beginning of the interval. This results in a more accurate approximation of the integral in Equation (2), and consequently a better approximation of the solution.
+
+To construct the method, we again consider the integral form:
+\begin{equation}
+y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f(t,y(t)) , dt.
+\end{equation}
+
+Instead of approximating the integrand as constant (as in Euler’s method), RK2 approximates the average slope over the interval by evaluating the derivative at both the beginning and the end of the step. First, an initial estimate of the slope is computed:
+\begin{equation}
+k_1 = f(t_n, y_n).
+\end{equation}
+
+This is used to predict a provisional value at the end of the interval:
+\begin{equation}
+y_n^{*} = y_n + h k_1.
+\end{equation}
+
+A second slope is then evaluated at this predicted point:
+\begin{equation}
+k_2 = f(t_n + h, y_n^{*}).
+\end{equation}
+
+The solution is then advanced using the average of these two slopes:
+\begin{equation}
+y_{n+1} = y_n + \frac{h}{2}(k_1 + k_2).
+\end{equation}
+
+Geometrically, this method can be interpreted as averaging the slope at the beginning and the end of the interval, thereby accounting for variation in the derivative across the step. 
+
+\subsubsection{Error Analysis of RK2}
+
+To analyse the error, we again consider the Taylor series expansion of the exact solution about $t_n$:
+\begin{equation}
+y(t_{n+1}) = y(t_n) + h y'(t_n) + \frac{h^2}{2} y''(t_n) + \frac{h^3}{6} y'''(\xi),
+\end{equation}
+for some $\xi \in [t_n, t_{n+1}]$.
+
+We now expand the RK2 update. Using $k_1 = f(t_n, y_n) = y'(t_n)$, and noting that
+\begin{equation}
+k_2 = f(t_n + h, y_n + h k_1),
+\end{equation}
+we expand $k_2$ about $(t_n, y_n)$:
+\begin{equation}
+k_2 = y'(t_n) + h \frac{\partial f}{\partial t} + h y'(t_n)\frac{\partial f}{\partial y} + \mathcal{O}(h^2).
+\end{equation}
+
+Combining terms, the RK2 update becomes
+\begin{equation}
+y_{n+1} = y_n + h y'(t_n) + \frac{h^2}{2} y''(t_n) + \mathcal{O}(h^3).
+\end{equation}
+
+Comparing with the exact Taylor expansion, we see that RK2 correctly reproduces all terms up to order $h^2$, and neglects terms of order $h^3$ and higher. Therefore, the local truncation error is
+\begin{equation}
+\tau_n = \mathcal{O}(h^3).
+\end{equation}
+
+Over $N \sim \frac{1}{h}$ steps, this accumulates to a global error of
+\begin{equation}
+E_N = \mathcal{O}(h^2).
+\end{equation}
+
+The RK2 method is second-order accurate. This represents a significant improvement over Euler’s method, as the error decreases quadratically with step size rather than linearly. In practical terms, this allows for larger step sizes to be used while maintaining a comparable level of accuracy.
+\subsection{Fourth-Order Runge--Kutta Method (RK4)}
+
+The fourth-order Runge--Kutta (RK4) method further refines the approximation of the integral in Equation (2) by evaluating the slope at multiple intermediate points within each time step and combining them in a weighted average. This approach provides a highly accurate estimate of the average slope over the interval, allowing the method to capture both curvature and higher-order behaviour of the solution.
+
+Starting again from the integral formulation,
+\begin{equation}
+y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f(t,y(t)) , dt,
+\end{equation}
+the RK4 method approximates the integral using four slope evaluations.
+
+First, the slope at the beginning of the interval is computed:
+\begin{equation}
+k_1 = f(t_n, y_n).
+\end{equation}
+
+A second slope is evaluated at the midpoint using $k_1$:
+\begin{equation}
+k_2 = f\left(t_n + \frac{h}{2}, y_n + \frac{h}{2}k_1\right).
+\end{equation}
+
+A third slope is again evaluated at the midpoint, now using $k_2$:
+\begin{equation}
+k_3 = f\left(t_n + \frac{h}{2}, y_n + \frac{h}{2}k_2\right).
+\end{equation}
+
+Finally, a fourth slope is evaluated at the end of the interval using $k_3$:
+\begin{equation}
+k_4 = f(t_n + h, y_n + h k_3).
+\end{equation}
+
+These slopes are combined in a weighted average to advance the solution:
+\begin{equation}
+y_{n+1} = y_n + \frac{h}{6}\left(k_1 + 2k_2 + 2k_3 + k_4\right).
+\end{equation}
+
+The weighting reflects the relative importance of each slope in approximating the integral, with greater weight placed on the midpoint evaluations. Geometrically, RK4 can be interpreted as constructing a highly accurate estimate of the average slope over the interval by sampling the curve at chosen points. This allows the method to closely track the true trajectory of the solution even if the derivative varies significantly within a single step.
+
+\subsubsection{Error Analysis of RK4}
+
+To analyse the error, we again consider the Taylor series expansion of the exact solution:
+\begin{equation}
+y(t_{n+1}) = y(t_n) + h y'(t_n) + \frac{h^2}{2} y''(t_n) + \frac{h^3}{6} y'''(t_n) + \frac{h^4}{24} y^{(4)}(t_n) + \frac{h^5}{120} y^{(5)}(\xi),
+\end{equation}
+for some $\xi \in [t_n, t_{n+1}]$.
+
+The RK4 method constructs its update by combining the four slope evaluations. Expanding each $k_i$ about $(t_n, y_n)$ and substituting into the update formula yields
+\begin{equation}
+y_{n+1} = y_n + h y'(t_n) + \frac{h^2}{2} y''(t_n) + \frac{h^3}{6} y'''(t_n) + \frac{h^4}{24} y^{(4)}(t_n) + \mathcal{O}(h^5).
+\end{equation}
+
+The RK4 update matches the Taylor expansion of the true solution up to terms of order $h^4$, with discrepancies only appearing at order $h^5$. The local truncation error is therefore
+\begin{equation}
+\tau_n = \mathcal{O}(h^5).
+\end{equation}
+
+Over $N \sim \frac{1}{h}$ steps, this leads to a global error of
+\begin{equation}
+E_N = \mathcal{O}(h^4).
+\end{equation}
+
+Therefore, the RK4 method is fourth-order accurate. This implies that the error decreases very rapidly as the step size is refined. In practical terms, halving the step size reduces the global error by approximately a factor of $16$, which is a substantial improvement over lower-order methods. Consequently, RK4 is able to achieve high accuracy with relatively large step sizes, making it particularly well-suited to nonlinear systems such as the SIR model.
+
+\subsection{Algorithm General and Sample Flowcharts}
+\begin{figure}[!t]
+\centering
+\begin{tikzpicture}[node distance=2cm]
+
+% Styles
+\tikzstyle{startstop} = [ellipse, draw, minimum width=3cm, minimum height=1cm]
+\tikzstyle{process} = [rectangle, draw, minimum width=3.5cm, minimum height=1cm]
+\tikzstyle{decision} = [diamond, draw, aspect=2]
+\tikzstyle{arrow} = [->, thick]
+
+% Nodes
+\node (start) [startstop] {Start};
+\node (init) [process, below of=start] {Initialise $t=t_0$, $y=y_0$, $n=0$};
+\node (k1) [process, below of=init] {$k_1 = f(t,y)$};
+\node (predict) [process, below of=k1] {$y^* = y + h k_1$};
+\node (k2) [process, below of=predict] {$k_2 = f(t+h, y^*)$};
+\node (update) [process, below of=k2] {$y = y + \frac{h}{2}(k_1 + k_2)$};
+\node (time) [process, below of=update] {$t = t + h,\; n = n + 1$};
+\node (check) [decision, below of=time, yshift=-0.5cm] {$n < N?$};
+\node (stop) [startstop, below of=check, yshift=-0.5cm] {End};
+
+% Arrows
+\draw [arrow] (start) -- (init);
+\draw [arrow] (init) -- (k1);
+\draw [arrow] (k1) -- (predict);
+\draw [arrow] (predict) -- (k2);
+\draw [arrow] (k2) -- (update);
+\draw [arrow] (update) -- (time);
+\draw [arrow] (time) -- (check);
+\draw [arrow] (check) -- node[right] {No} (stop);
+\draw [arrow] (check.west) -- ++(-3,0) -- ++(0,9.5) -- node[left] {Yes} (k1.west);
+
+\end{tikzpicture}
+\caption{General Flowchart for RK2 algorithm}
+\end{figure}
+\begin{figure}[!t]
+\centering
+\begin{tikzpicture}[node distance=2.2cm]
+
+% Styles
+\tikzstyle{startstop} = [ellipse, draw, minimum width=3cm, minimum height=1cm]
+\tikzstyle{process} = [rectangle, draw, minimum width=5cm, minimum height=1.2cm]
+\tikzstyle{decision} = [diamond, draw, aspect=2]
+\tikzstyle{arrow} = [->, thick]
+
+% Nodes
+\node (start) [startstop] {Start};
+
+\node (init) [process, below of=start] 
+{Initialise $t = t_0$, $y = y_0$, $n = 0$};
+
+\node (k1) [process, below of=init] 
+{$k_1 = f(t,y)$};
+
+\node (k2) [process, below of=k1] 
+{$k_2 = f\left(t+\frac{h}{2},\, y+\frac{h}{2}k_1\right)$};
+
+\node (k3) [process, below of=k2] 
+{$k_3 = f\left(t+\frac{h}{2},\, y+\frac{h}{2}k_2\right)$};
+
+\node (k4) [process, below of=k3] 
+{$k_4 = f(t+h,\, y+h k_3)$};
+
+\node (update) [process, below of=k4] 
+{$y = y + \frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4)$};
+
+\node (advance) [process, below of=update] 
+{$t = t + h,\; n = n + 1$};
+
+\node (check) [decision, below of=advance, yshift=-0.5cm] 
+{$n < N?$};
+
+\node (stop) [startstop, below of=check, yshift=-0.5cm] {End};
+
+% Arrows
+\draw [arrow] (start) -- (init);
+\draw [arrow] (init) -- (k1);
+\draw [arrow] (k1) -- (k2);
+\draw [arrow] (k2) -- (k3);
+\draw [arrow] (k3) -- (k4);
+\draw [arrow] (k4) -- (update);
+\draw [arrow] (update) -- (advance);
+\draw [arrow] (advance) -- (check);
+\draw [arrow] (check) -- node[right] {No} (stop);
+\draw [arrow] (check.west) -- ++(-3.5,0) -- ++(0,11) -- node[left] {Yes} (k1.west);
+
+\end{tikzpicture}
+\caption{Example Flowchart of the RK2 algorithm with $\frac{dy}{dx} = e^{2x}$ with $x_0=0$, $y_0=1$, $h=0.1$ }
+\end{figure}
+\begin{figure}[!t]
+\centering
+\begin{tikzpicture}[node distance=2.2cm]
+
+% Styles
+\tikzstyle{startstop} = [ellipse, draw, minimum width=3cm, minimum height=1cm]
+\tikzstyle{process} = [rectangle, draw, minimum width=5cm, minimum height=1.2cm]
+\tikzstyle{arrow} = [->, thick]
+
+% Nodes
+\node (start) [startstop] {Start};
+
+\node (init) [process, below of=start] 
+{Given $\frac{dy}{dx} = e^{2x}$ Initialise: $x_0 = 0$, $y_0 = 1$, $h = 0.1$};
+
+\node (k1) [process, below of=init] 
+{$k_1 = e^{2x_0} = e^0 = 1$};
+
+\node (predict) [process, below of=k1] 
+{$y^* = y_0 + h k_1 = 1 + 0.1(1) = 1.1$};
+
+\node (k2) [process, below of=predict] 
+{$k_2 = e^{2(x_0 + h)} = e^{0.2} \approx 1.2214$};
+
+\node (update) [process, below of=k2] 
+{$y_1 = y_0 + \frac{h}{2}(k_1 + k_2)$ $= 1 + 0.05(1 + 1.2214) = 1.11107$};
+
+\node (exact) [process, below of=update] 
+{Exact solution: $y(x) = 1 + \frac{1}{2}(e^{2x} - 1)$ $y(0.1) \approx 1.11070$};
+
+\node (error) [process, below of=exact] 
+{Error $= |1.11107 - 1.11070| \approx 3.7 \times 10^{-4}$};
+
+\node (stop) [startstop, below of=error] {End};
+
+% Arrows
+\draw [arrow] (start) -- (init);
+\draw [arrow] (init) -- (k1);
+\draw [arrow] (k1) -- (predict);
+\draw [arrow] (predict) -- (k2);
+\draw [arrow] (k2) -- (update);
+\draw [arrow] (update) -- (exact);
+\draw [arrow] (exact) -- (error);
+\draw [arrow] (error) -- (stop);
+
+\end{tikzpicture}
+\caption{General Flowchart for RK4 Algorithm}
+\end{figure}
+\begin{figure}[!t]
+\centering
+\begin{tikzpicture}[node distance=2.2cm]
+
+% Styles
+\tikzstyle{startstop} = [ellipse, draw, minimum width=3cm, minimum height=1cm]
+\tikzstyle{process} = [rectangle, draw, minimum width=5.5cm, minimum height=1.2cm]
+\tikzstyle{arrow} = [->, thick]
+
+% Nodes
+\node (start) [startstop] {Start};
+
+\node (init) [process, below of=start] 
+{Given $\frac{dy}{dx} = e^{2x}$ Initialise: $x_0 = 0$, $y_0 = 1$, $h = 0.1$};
+
+\node (k1) [process, below of=init] 
+{$k_1 = e^{2x_0} = e^0 = 1$};
+
+\node (k2) [process, below of=k1] 
+{$k_2 = e^{2(x_0 + h/2)} = e^{0.1} \approx 1.10517$};
+
+\node (k3) [process, below of=k2] 
+{$k_3 = e^{2(x_0 + h/2)} = e^{0.1} \approx 1.10517$};
+
+\node (k4) [process, below of=k3] 
+{$k_4 = e^{2(x_0 + h)} = e^{0.2} \approx 1.22140$};
+
+\node (update) [process, below of=k4] 
+{$y_1 = y_0 + \frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4)$ $= 1 + \frac{0.1}{6}(1 + 2(1.10517) + 2(1.10517) + 1.22140)$ $\approx 1.11070$};
+
+\node (exact) [process, below of=update] 
+{Exact solution: $y(x) = 1 + \frac{1}{2}(e^{2x} - 1)$ $y(0.1) \approx 1.11070$};
+
+\node (error) [process, below of=exact] 
+{Error $\approx 6.2 \times 10^{-8}$ (negligible at this scale)};
+
+\node (stop) [startstop, below of=error] {End};
+
+% Arrows
+\draw [arrow] (start) -- (init);
+\draw [arrow] (init) -- (k1);
+\draw [arrow] (k1) -- (k2);
+\draw [arrow] (k2) -- (k3);
+\draw [arrow] (k3) -- (k4);
+\draw [arrow] (k4) -- (update);
+\draw [arrow] (update) -- (exact);
+\draw [arrow] (exact) -- (error);
+\draw [arrow] (error) -- (stop);
+
+\end{tikzpicture}
+\caption{Example Flowchart of the RK4 Algorithm with $\frac{dy}{dx} = e^{2x}$ with $x_0=0$, $y_0=1$, $h=0.1$}
+\end{figure}
 
 \section{Examples and Applications}
 Demonstration of the algorithms’ correctness and performance through test cases, application to relevant cases to build research result
