@@ -1,6 +1,8 @@
 \documentclass{article}
 \usepackage{graphicx} % Required for inserting images
 \usepackage{amsmath} % Required for align environment and advanced math
+\usepackage{geometry}
+\geometry{margin=1in}
 
 \title{Numerical solution of the SIR epidemic model using Euler and Runge-Kutta Methods}
 \author{Riley Marriott, James, James, Andre}
@@ -21,43 +23,45 @@ This paper investigates the performance of several numerical methods for solving
 
 
 \section{Introduction}
-
-This paper focuses on the numerical approximation of solutions to Ordinary Differential Equations (ODEs). ODEs are widely used to describe time-dependent systems across many disciplines, including engineering (e.g. fluid flow and heat transfer), physics (e.g. oscillatory motion), and biology (e.g. population dynamics and epidemiology). However, many real-world systems are nonlinear and coupled, and often do not admit closed-form analytical solutions. This limitation motivates the use of numerical methods to approximate system behaviour. \newline{}\newline{}
-In epidemiology, the spread of infectious disease within a population is inherently dynamic and of significant practical importance. Mathematical models are therefore essential tools for predicting outbreak behaviour, estimating peak infection levels, and informing public health decision-making. One of the most fundamental models is the Susceptible–Infected–Recovered (SIR) model, which partitions a population into three compartments: susceptible $S(t)$, infected $I(t)$, and recovered $R(t)$. Individuals transition between these compartments over time according to a system of nonlinear differential equations. \newline{}\newline{}
-Due to the nonlinear nature of the governing equations, analytical solutions to the SIR model are generally not available, necessitating the use of numerical approximation techniques. In this study, Euler’s method, the second-order Runge–Kutta method (RK2), and the fourth-order Runge–Kutta method (RK4) are implemented and compared. The performance of these methods is evaluated in terms of accuracy (via global error), stability, and computational efficiency, providing insight into their suitability for modelling nonlinear dynamical systems.
+Ordinary Differential Equations (ODEs) describe systems in which variables evolve over time according to specified rates of change. These equations are fundamental in many disciplines, including engineering (fluid flow, heat transfer systems), physics (oscillations and motion), and biology (population dynamics and epidemiology). 
+In many practical situations, ODE systems are nonlinear, coupled, and do not admit simple analytical solutions. As a result, numerical methods must be implemented to approximate their behaviour. These methods discretise the time domain and compute approximate solutions at discrete points, allowing complex systems to be analysed and predicted.
+Within epidemiology, modelling the spread of infectious disease is a dynamic problem of significant importance. Mathematical models help predict outbreaks, estimate peak infection levels, and inform public health decisions. One of the most widely used models is the SIR model, which divides a population into susceptible, infected, and recovered compartments.
+This report investigates the performance of several numerical methods for solving ODEs, with particular focus on Euler’s method, the second-order Runge--Kutta method (RK2), and the fourth-order Runge--Kutta method (RK4). The methods are first evaluated using a simple ODE with a known analytical solution, before being applied to the nonlinear SIR model. The accuracy, stability, and computational efficiency of each method are compared to determine their suitability for different types of problems.
 
 \section{Theory}
 
 \subsection{Ordinary Differential Equations}
 
-An Ordinary Differential Equation (ODE) describes the relationship between a function and its derivates with respect to a single, independent variable (in our case, time). A general first order Intial Value Problem (IVP) is given by:
+An Ordinary Differential Equation (ODE) describes the relationship between a function and its derivatives with respect to a single independent variable (in this case, time). A general first-order Initial Value Problem (IVP) is given by:
 \begin{equation} 
-\frac{dy}{dt} = f(t,y) \quad y(t_0) = y_0,
+\frac{dy}{dt} = f(t,y), \quad y(t_0) = y_0,
 \end{equation} 
-where $f(t,y)$ is a known function with $y(t)$ representing the unknown solution.
-In many practical applications, especially when $f(t,y)$ is non-linear, analyatical solutions can be extremely difficult or impossible to obtain. Thus, the solution must be approximated by discretising time into steps of size $h$, producing a sequence of approximations for $\{y_n\}$ at discrete points $t_n = t_0 + nh$.
+where $f(t,y)$ is a known function and $y(t)$ represents the unknown solution.
+
+In many practical applications, particularly when $f(t,y)$ is nonlinear, analytical solutions can be extremely difficult or impossible to obtain. As a result, the solution must be approximated numerically by discretising time into steps of size $h$, producing a sequence of approximations $\{y_n\}$ at discrete points $t_n = t_0 + nh$.
 
 \subsection{Derivation of Numerical Approximation Framework}
 
-To construct our model, we begin by integrating both sides of Equation (1) over a small interval $[t_n, t_{n+1}]$:
+To construct a numerical scheme, we begin by integrating both sides of Equation (1) over a small interval $[t_n, t_{n+1}]$:
 \begin{equation}
-y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f(t,y(t)) \,dt
+y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f(t,y(t)) \,dt.
 \end{equation}
-This integral is not analyatical, as y(t) is known. Thus the challenge lies in approximating the integral, in which we will explore various methods of doing so - Euler's Method, RK2 and RK4. These methods differ greatly in their levels of accuracy of this approximation and their computational cost.
+
+This integral cannot generally be evaluated analytically because the exact solution $y(t)$ is unknown. Therefore, the problem reduces to approximating this integral. The different numerical methods considered in this report—Euler’s method, RK2, and RK4—can all be interpreted as different approaches to approximating this integral, with varying levels of accuracy and computational cost.
 
 \subsection{Euler's Method}
 
-The simplest approach of approximation is Euler's method. 
-To begin with, we approximate $f(t,y)$ as constant over the interval, using its value at the beginning of the step:
+The simplest approach to approximating the integral is Euler’s method. We approximate $f(t,y)$ as constant over the interval using its value at the beginning of the step:
 \begin{equation}
 \int_{t_n}^{t_{n+1}} f(t,y(t)) \, dt \approx h f(t_n, y_n).
 \end{equation}
 
-Subsituting into Equation (2) gives Euler's method:
+Substituting into Equation (2) gives Euler’s method:
 \begin{equation}
-y_{n+1} = y_n + h f(t_n, y_n)
+y_{n+1} = y_n + h f(t_n, y_n).
 \end{equation}
-The solution is approximated by assuming that the slope remains constant over each time step, using the derivative evaluated at the beginning of the respective interval. Geometrically, this corresponds to advancing the solution along the tangent line at $(t_n, y_n)$. While this approach is simple and computationally inexpensive, it fails to consider the curvature in the solution, leading to the quite rapid accumulation of error over time. Consequently, Euler’s method is only first-order accurate and requires sufficiently small step sizes to maintain stability and accuracy.
+
+The solution is approximated by assuming that the slope remains constant over each time step, using the derivative evaluated at the beginning of the interval. Geometrically, this corresponds to advancing the solution along the tangent line at $(t_n, y_n)$. While this approach is simple and computationally inexpensive, it neglects curvature in the solution, leading to rapid accumulation of error. Consequently, Euler’s method is only first-order accurate and requires sufficiently small step sizes to maintain stability and accuracy.
 
 \subsubsection{Error Analysis of Euler's Method}
 
@@ -65,24 +69,30 @@ Using a Taylor series expansion of the true solution,
 \begin{equation}
 y(t_{n+1}) = y(t_n) + h y'(t_n) + \frac{h^2}{2} y''(\xi),
 \end{equation}
-for some $\xi \in [t_n, t_{n+1}]$, we see that Euler's method neglects higher-order terms. The local truncation error is therefore $\mathcal{O}(h^2)$, leading to a global error of $\mathcal{O}(h)$.
+for some $\xi \in [t_n, t_{n+1}]$, Euler’s method neglects higher-order terms. The local truncation error is therefore $\mathcal{O}(h^2)$, which leads to a global error of $\mathcal{O}(h)$.
 
 \subsection{Runge-Kutta Methods}
-Generally, Runge-Kutta methods improve accuracy by evaluating $f(t,y)$ at multiple points within each time step, providing a more accurate approxmiation of the integral in Equation(2).
+
+Runge--Kutta methods improve accuracy by evaluating $f(t,y)$ at multiple points within each time step, providing a more accurate approximation of the integral in Equation (2).
+
 \subsubsection{Second-Order Runge--Kutta Method (RK2)}
-A second order approximation can be obtained by averaging the slope over the interval:
+
+A second-order approximation can be obtained by averaging the slope over the interval:
 \begin{align}
 k_1 &= f(t_n, y_n), \\
 k_2 &= f(t_n + h, y_n + h k_1), \\
 y_{n+1} &= y_n + \frac{h}{2}(k_1 + k_2).
 \end{align}
-The RK2 method improves upon Euler's method by incorporating more information about the slope, both at the beginning and at the end of the interval. Effectively, this accounts for changes of the slope within the interval, allowing the method to better capture curvature in the solution. As a result, RK2 achieves second-order accuracy, and provides significantlty more accuracy then Euler's method with only a moderately more expensive computational cost.
+
+The RK2 method improves upon Euler’s method by incorporating information about the slope at both the beginning and end of the interval. This allows the method to better capture variation in the slope across the step, improving the approximation of the solution. As a result, RK2 achieves second-order accuracy and provides significantly improved results compared to Euler’s method, with only a moderate increase in computational cost.
 
 \subsubsection{Error Analysis of RK2}
-The RK2 method has a local truncation error of $\mathcal{O}(h^3)$ and a global error of $\mathcal{O}(h^2)$, essentially allowing larger step sizes to be used while maintaining decent accuracy.
+
+The RK2 method has a local truncation error of $\mathcal{O}(h^3)$ and a global error of $\mathcal{O}(h^2)$, allowing larger step sizes to be used while maintaining good accuracy.
 
 \subsubsection{Fourth-Order Runge--Kutta Method (RK4)}
-A further refinement is made by implementing the fourth-order Runge--Kutta method:
+
+A further refinement is given by the fourth-order Runge--Kutta method:
 \begin{align}
 k_1 &= f(t_n, y_n), \\
 k_2 &= f\left(t_n + \frac{h}{2}, y_n + \frac{h}{2}k_1\right), \\
@@ -92,19 +102,22 @@ k_4 &= f(t_n + h, y_n + hk_3),
 \begin{equation}
 y_{n+1} = y_n + \frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4).
 \end{equation}
-Essentially, the RK4 method evaluates the slope at four points within each time step and combines them to obtain a weighted average. This allows the method to accurately capture higher-order behaviour of the solution, including curvature and changes of slope within each interval. Thus, the RK4 method achieves fourth-order accuracy and typically provides highly accurate results even for large step sizes, making it one of the most popular methods for solving ODEs.
+
+The RK4 method evaluates the slope at four points within each time step and combines them using a weighted average. This enables the method to accurately capture higher-order behaviour of the solution, including curvature and variation in the slope. As a result, RK4 achieves fourth-order accuracy and typically produces highly accurate results even for relatively large step sizes.
 
 \subsubsection{Error Analysis of RK4}
-RK4 has a local truncation error of $\mathcal{O}(h^5)$ and a global error of $\mathcal{O}(h^4)$. Although it requires more computational power due to the increased function evaluations within each time step, its superior accuracy often results in greater overall effiency then in lower order methods.
- 
+
+RK4 has a local truncation error of $\mathcal{O}(h^5)$ and a global error of $\mathcal{O}(h^4)$. Although it requires more function evaluations per step, its superior accuracy often leads to greater overall efficiency compared to lower-order methods.
+
 \subsection{The SIR Model}
 
-The Susceptible–Infected–Recovered (SIR) model describes the spread of infectious disease within a closed population. The total population, $N$ is divided into three groups:
+The Susceptible–Infected–Recovered (SIR) model describes the spread of infectious disease within a closed population. The total population, $N$, is divided into three groups:
 \begin{itemize}
     \item $S(t)$: susceptible individuals,
     \item $I(t)$: infected individuals,
     \item $R(t)$: recovered individuals.
 \end{itemize}
+
 The governing equations are
 \begin{align}
 \frac{dS}{dt} &= -\beta S I, \\
@@ -112,16 +125,19 @@ The governing equations are
 \frac{dR}{dt} &= \gamma I,
 \end{align}
 where $\beta$ is the transmission rate and $\gamma$ is the recovery rate.
-The term $\beta S I$ ariises from the assumption that the rate of infection is proportional to both the number of susceptible and infected individuals, reflecting random interactions within the population. The recovery term on the other hand, $\gamma I$, assumes that infected individuals recover at a constant rate.
+
+The term $\beta S I$ arises from the assumption that the rate of infection is proportional to both the number of susceptible and infected individuals, reflecting random interactions within the population. The recovery term $\gamma I$ assumes that infected individuals recover at a constant rate.
 
 \subsection{Basic Reproduction Number}
-We primarily want to to focus on the basic reproduction number,
+
+The basic reproduction number is defined as
 \begin{equation}
-R_0 = \frac{\beta}{\gamma}.
-\end{equation},
-as this parameter describes whether an epidemic will grow or decay. If $R_0 > 1$, infections increase initially, whereas if $R_0 < 1$, the disease dies out.
+R_0 = \frac{\beta}{\gamma},
+\end{equation}
+and represents the expected number of secondary infections produced by a single infected individual in a fully susceptible population. If $R_0 > 1$, the infection spreads, whereas if $R_0 < 1$, the disease dies out.
 
 \subsection{Conservation of Population}
+
 Summing the governing equations yields
 \begin{equation}
 \frac{d}{dt}(S+I+R) = 0,
@@ -130,15 +146,19 @@ which implies
 \begin{equation}
 S(t) + I(t) + R(t) = N.
 \end{equation}
-This law of conservation provides an important validation check for numerical solutions.
+
+This conservation law provides an important validation check for numerical solutions.
 
 \subsection{Implications for Numerical Methods}
-The SIR system is nonlinear and coupled, making it very sensitive to numerical errors. Thus, poor numerical schemes or large step sizes must be avoided, as they lead to non-physical results, such as negative population values or a violation of the conservation law mentioned above. Therefore, we may not only consider computionally cheap methods but rather primarily focus on accurate and stable numerical methods for reliable simulation of epidemic dynamics.
+
+The SIR system is nonlinear and coupled, making it sensitive to numerical errors. Poor numerical schemes or excessively large step sizes can produce non-physical results, such as negative population values or violation of the conservation law. Therefore, it is essential to use numerical methods that are both accurate and stable when simulating epidemic dynamics.
 
 \section{Numerical Methods}
 Exposition of the algorithms (as pseudo-code or flowchart), numerical analysis of convergence rates, derivation of complexity
 
 \section{Examples and Applications}
+
+
 Demonstration of the algorithms’ correctness and performance through test cases, application to relevant cases to build research result
 
 \section{Conclusion}
