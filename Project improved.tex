@@ -1,16 +1,41 @@
 \documentclass{article}
-\usepackage{graphicx} % Required for inserting images
-\usepackage{amsmath} % Required for align environment and advanced math
+\usepackage{graphicx}
+\usepackage{amsmath}
 \usepackage{geometry}
 \geometry{margin=1in}
 \usepackage{tikz}
 \usepackage{float}
 \usepackage{placeins}
 \usetikzlibrary{shapes.geometric, arrows}
+
 \setlength{\textfloatsep}{10pt}
 \setlength{\floatsep}{10pt}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.4em}
 
-\title{Numerical solution of the SIR epidemic model using Euler and Runge-Kutta Methods}
+\tikzset{
+    startstop/.style = {
+        ellipse, draw,
+        minimum width=2.3cm,
+        minimum height=0.7cm,
+        align=center
+    },
+    process/.style = {
+        rectangle, draw,
+        minimum width=3cm,
+        minimum height=0.7cm,
+        align=center
+    },
+    decision/.style = {
+        diamond, draw, aspect=2,
+        align=center
+    },
+    arrow/.style = {
+        ->, thick
+    }
+}
+
+\title{Numerical solution of the SIR epidemic model using Euler and Runge--Kutta Methods}
 \author{Riley Marriott, James, James, Andre}
 \date{March 2026}
 
@@ -19,17 +44,18 @@
 \maketitle
 
 \newpage
-
 \tableofcontents
-
 \newpage
+
 \section{Abstract}
+
 Ordinary Differential Equations (ODEs) are used to model dynamic processes in many disciplines, including engineering, physics, and biology. In epidemiology, systems of ODEs are commonly employed to simulate the spread of infectious diseases within a population. However, many realistic models are nonlinear and do not admit simple analytical solutions, making numerical methods essential for approximating their behaviour. Among the most widely used approaches are the Runge--Kutta (RK) methods, which offer improved accuracy compared to simpler methods such as Euler’s method.
 
 This paper investigates the performance of several numerical methods for solving ordinary differential equations, with a particular focus on the Euler method, the second-order Runge--Kutta method (RK2), and the fourth-order Runge--Kutta method (RK4). The methods are first applied to a simple ODE with a known analytical solution to evaluate convergence behaviour and global error as a function of step size. They are then applied to the nonlinear Susceptible--Infected--Recovered (SIR) epidemic model to simulate the spread of disease within a population. The numerical solutions are evaluated in terms of accuracy, stability, and computational efficiency, providing insight into the relative performance of each method when modelling complex real-world systems. The results highlight the trade-off between numerical accuracy and computational cost, illustrating the advantages of higher-order Runge--Kutta methods for modelling nonlinear dynamical systems.
 
 \section{Introduction}
-Ordinary Differential Equations (ODEs) describe systems in which variables evolve over time according to specified rates of change. These equations are fundamental in many disciplines, including engineering (fluid flow, heat transfer systems), physics (oscillations and motion), and biology (population dynamics and epidemiology).
+
+Ordinary Differential Equations (ODEs) describe systems in which variables evolve over time according to specified rates of change. These equations are fundamental in many disciplines, including engineering (fluid flow and heat transfer systems), physics (oscillations and motion), and biology (population dynamics and epidemiology).
 
 In many practical situations, ODE systems are nonlinear, coupled, and do not admit simple analytical solutions. As a result, numerical methods must be implemented to approximate their behaviour. These methods discretise the time domain and compute approximate solutions at discrete points, allowing complex systems to be analysed and predicted.
 
@@ -40,13 +66,12 @@ This report investigates the performance of several numerical methods for solvin
 \section{Theory}
 
 \subsection{Ordinary Differential Equations}
-
 An Ordinary Differential Equation (ODE) describes the relationship between a function and its derivatives with respect to a single independent variable (in this case, time). A general first-order Initial Value Problem (IVP) is given by:
-\begin{equation} 
-\frac{dy}{dt} = f(t,y), \quad y(t_0) = y_0,
-\end{equation} 
-where $f(t,y)$ is a known function and $y(t)$ represents the unknown solution.
 
+\begin{equation}
+\frac{dy}{dt} = f(t,y), \quad y(t_0) = y_0,
+\end{equation}
+where $f(t,y)$ is a known function and $y(t)$ represents the unknown solution.
 In many practical applications, particularly when $f(t,y)$ is nonlinear, analytical solutions can be extremely difficult or impossible to obtain. As a result, the solution must be approximated numerically by discretising time into steps of size $h$, producing a sequence of approximations $\{y_n\}$ at discrete points $t_n = t_0 + nh$.
 
 \subsection{Derivation of Numerical Approximation Framework}
@@ -56,7 +81,7 @@ To construct a numerical scheme, we begin by integrating both sides of Equation 
 y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f(t,y(t)) \,dt.
 \end{equation}
 
-This integral cannot generally be evaluated analytically because the exact solution $y(t)$ is unknown. Therefore, the problem reduces to approximating this integral. The different numerical methods considered in this report—Euler’s method, RK2, and RK4—can all be interpreted as different approaches to approximating this integral, with varying levels of accuracy and computational cost.
+This integral cannot generally be evaluated analytically because the exact solution $y(t)$ is unknown. Therefore, the problem reduces to approximating this integral. The different numerical methods considered in this report---Euler’s method, RK2, and RK4---can all be interpreted as different approaches to approximating this integral, with varying levels of accuracy and computational cost.
 
 \subsection{Euler's Method}
 
@@ -106,13 +131,14 @@ A further refinement is given by the fourth-order Runge--Kutta method:
 k_1 &= f(t_n, y_n), \\
 k_2 &= f\left(t_n + \frac{h}{2}, y_n + \frac{h}{2}k_1\right), \\
 k_3 &= f\left(t_n + \frac{h}{2}, y_n + \frac{h}{2}k_2\right), \\
-k_4 &= f(t_n + h, y_n + hk_3),
+k_4 &= f(t_n + h, y_n + h k_3),
 \end{align}
 \begin{equation}
 y_{n+1} = y_n + \frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4).
 \end{equation}
 
 The RK4 method evaluates the slope at four points within each time step and combines them using a weighted average. This enables the method to accurately capture higher-order behaviour of the solution, including curvature and variation in the slope. As a result, RK4 achieves fourth-order accuracy and typically produces highly accurate results even for relatively large step sizes.
+This construction can also be interpreted as a quadrature rule for approximating the integral in Equation (2), where the weights are chosen to maximise accuracy up to fourth order.
 
 \subsubsection{Error Analysis of RK4}
 
@@ -120,7 +146,7 @@ RK4 has a local truncation error of $\mathcal{O}(h^5)$ and a global error of $\m
 
 \subsection{The SIR Model}
 
-The Susceptible–Infected–Recovered (SIR) model describes the spread of infectious disease within a closed population. The total population, $N$, is divided into three groups:
+The Susceptible--Infected--Recovered (SIR) model describes the spread of infectious disease within a closed population. In this report, the model is written in normalised form, so that $S(t)$, $I(t)$, and $R(t)$ represent fractions of the total population:
 \begin{itemize}
     \item $S(t)$: susceptible individuals,
     \item $I(t)$: infected individuals,
@@ -151,9 +177,9 @@ Summing the governing equations yields
 \begin{equation}
 \frac{d}{dt}(S+I+R) = 0,
 \end{equation}
-which implies
+which implies that the total population remains constant over time. In the normalised form used throughout this report,
 \begin{equation}
-S(t) + I(t) + R(t) = N.
+S(t) + I(t) + R(t) = 1.
 \end{equation}
 
 This conservation law provides an important validation check for numerical solutions.
@@ -178,23 +204,18 @@ y_{n+1} = y_n + h f(t_n, y_n).
 The method is implemented iteratively, starting from the initial condition $y_0$. At each time step, the derivative function is evaluated once, and the solution is updated accordingly.
 
 Due to its simplicity, Euler’s method is computationally efficient and easy to implement. However, because it assumes the slope remains constant over the interval, it introduces relatively large numerical errors unless a sufficiently small step size is used. As a result, it is primarily useful as a baseline method for comparison with higher-order schemes.
+
 \begin{figure}[htbp]
 \centering
-\resizebox{0.72\textwidth}{!}{
-\begin{tikzpicture}[node distance=1.5cm]
-
-\tikzstyle{startstop} = [ellipse, draw, minimum width=3cm, minimum height=1cm]
-\tikzstyle{process} = [rectangle, draw, minimum width=4cm, minimum height=1cm]
-\tikzstyle{decision} = [diamond, draw, aspect=2]
-\tikzstyle{arrow} = [->, thick]
+\begin{tikzpicture}[node distance=1.1cm, scale=0.7, every node/.style={scale=0.7}]
 
 \node (start) [startstop] {Start};
 \node (init) [process, below of=start] {Initialise $t=t_0$, $y=y_0$, $n=0$};
 \node (slope) [process, below of=init] {$k_1 = f(t,y)$};
 \node (update) [process, below of=slope] {$y = y + hk_1$};
 \node (time) [process, below of=update] {$t = t + h,\; n = n + 1$};
-\node (check) [decision, below of=time, yshift=-0.5cm] {$n < N?$};
-\node (stop) [startstop, below of=check, yshift=-0.5cm] {End};
+\node (check) [decision, below of=time, yshift=-0.3cm] {$n < N?$};
+\node (stop) [startstop, below of=check, yshift=-0.3cm] {End};
 
 \draw [arrow] (start) -- (init);
 \draw [arrow] (init) -- (slope);
@@ -202,10 +223,9 @@ Due to its simplicity, Euler’s method is computationally efficient and easy to
 \draw [arrow] (update) -- (time);
 \draw [arrow] (time) -- (check);
 \draw [arrow] (check) -- node[right] {No} (stop);
-\draw [arrow] (check.west) -- ++(-3,0) -- ++(0,7.2) -- node[left] {Yes} (slope.west);
+\draw [arrow] (check.west) -- ++(-2.5,0) -- ++(0,5.5) -- node[left] {Yes} (slope.west);
 
 \end{tikzpicture}
-}
 \caption{General flowchart for the Euler algorithm.}
 \label{fig:euler-general}
 \end{figure}
@@ -218,7 +238,7 @@ The second-order Runge--Kutta (RK2) method improves upon Euler’s method by inc
 
 To construct the method, we again consider the integral form:
 \begin{equation}
-y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f(t,y(t)) , dt.
+y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f(t,y(t)) \, dt.
 \end{equation}
 
 Instead of approximating the integrand as constant (as in Euler’s method), RK2 approximates the average slope over the interval by evaluating the derivative at both the beginning and the end of the step. First, an initial estimate of the slope is computed:
@@ -241,20 +261,12 @@ The solution is then advanced using the average of these two slopes:
 y_{n+1} = y_n + \frac{h}{2}(k_1 + k_2).
 \end{equation}
 
-Geometrically, this method can be interpreted as averaging the slope at the beginning and the end of the interval, thereby accounting for variation in the derivative across the step. 
+Geometrically, this method can be interpreted as averaging the slope at the beginning and the end of the interval, thereby accounting for variation in the derivative across the step.
 
 \begin{figure}[htbp]
 \centering
-\resizebox{0.72\textwidth}{!}{
-\begin{tikzpicture}[node distance=1.5cm]
+\begin{tikzpicture}[node distance=1.1cm, scale=0.7, every node/.style={scale=0.7}]
 
-% Styles
-\tikzstyle{startstop} = [ellipse, draw, minimum width=3cm, minimum height=1cm]
-\tikzstyle{process} = [rectangle, draw, minimum width=3.5cm, minimum height=1cm]
-\tikzstyle{decision} = [diamond, draw, aspect=2]
-\tikzstyle{arrow} = [->, thick]
-
-% Nodes
 \node (start) [startstop] {Start};
 \node (init) [process, below of=start] {Initialise $t=t_0$, $y=y_0$, $n=0$};
 \node (k1) [process, below of=init] {$k_1 = f(t,y)$};
@@ -262,10 +274,9 @@ Geometrically, this method can be interpreted as averaging the slope at the begi
 \node (k2) [process, below of=predict] {$k_2 = f(t+h, y^*)$};
 \node (update) [process, below of=k2] {$y = y + \frac{h}{2}(k_1 + k_2)$};
 \node (time) [process, below of=update] {$t = t + h,\; n = n + 1$};
-\node (check) [decision, below of=time, yshift=-0.5cm] {$n < N?$};
-\node (stop) [startstop, below of=check, yshift=-0.5cm] {End};
+\node (check) [decision, below of=time, yshift=-0.3cm] {$n < N?$};
+\node (stop) [startstop, below of=check, yshift=-0.3cm] {End};
 
-% Arrows
 \draw [arrow] (start) -- (init);
 \draw [arrow] (init) -- (k1);
 \draw [arrow] (k1) -- (predict);
@@ -274,10 +285,9 @@ Geometrically, this method can be interpreted as averaging the slope at the begi
 \draw [arrow] (update) -- (time);
 \draw [arrow] (time) -- (check);
 \draw [arrow] (check) -- node[right] {No} (stop);
-\draw [arrow] (check.west) -- ++(-3,0) -- ++(0,9.5) -- node[left] {Yes} (k1.west);
+\draw [arrow] (check.west) -- ++(-2.5,0) -- ++(0,7.0) -- node[left] {Yes} (k1.west);
 
 \end{tikzpicture}
-}
 \caption{General flowchart for the RK2 algorithm.}
 \label{fig:rk2-general}
 \end{figure}
@@ -324,7 +334,7 @@ The fourth-order Runge--Kutta (RK4) method further refines the approximation of 
 
 Starting again from the integral formulation,
 \begin{equation}
-y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f(t,y(t)) , dt,
+y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f(t,y(t)) \, dt,
 \end{equation}
 the RK4 method approximates the integral using four slope evaluations.
 
@@ -357,45 +367,19 @@ The weighting reflects the relative importance of each slope in approximating th
 
 \begin{figure}[htbp]
 \centering
-\resizebox{0.72\textwidth}{!}{
-\begin{tikzpicture}[node distance=1.6cm]
+\begin{tikzpicture}[node distance=1.15cm, scale=0.7, every node/.style={scale=0.7}]
 
-% Styles
-\tikzstyle{startstop} = [ellipse, draw, minimum width=3cm, minimum height=1cm]
-\tikzstyle{process} = [rectangle, draw, minimum width=5cm, minimum height=1.2cm]
-\tikzstyle{decision} = [diamond, draw, aspect=2]
-\tikzstyle{arrow} = [->, thick]
-
-% Nodes
 \node (start) [startstop] {Start};
+\node (init) [process, below of=start] {Initialise $t=t_0$, $y=y_0$, $n=0$};
+\node (k1) [process, below of=init] {$k_1 = f(t,y)$};
+\node (k2) [process, below of=k1] {$k_2 = f\left(t+\frac{h}{2},\, y+\frac{h}{2}k_1\right)$};
+\node (k3) [process, below of=k2] {$k_3 = f\left(t+\frac{h}{2},\, y+\frac{h}{2}k_2\right)$};
+\node (k4) [process, below of=k3] {$k_4 = f(t+h,\, y+h k_3)$};
+\node (update) [process, below of=k4] {$y = y + \frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4)$};
+\node (advance) [process, below of=update] {$t = t + h,\; n = n + 1$};
+\node (check) [decision, below of=advance, yshift=-0.3cm] {$n < N?$};
+\node (stop) [startstop, below of=check, yshift=-0.3cm] {End};
 
-\node (init) [process, below of=start] 
-{Initialise $t = t_0$, $y = y_0$, $n = 0$};
-
-\node (k1) [process, below of=init] 
-{$k_1 = f(t,y)$};
-
-\node (k2) [process, below of=k1] 
-{$k_2 = f\left(t+\frac{h}{2},\, y+\frac{h}{2}k_1\right)$};
-
-\node (k3) [process, below of=k2] 
-{$k_3 = f\left(t+\frac{h}{2},\, y+\frac{h}{2}k_2\right)$};
-
-\node (k4) [process, below of=k3] 
-{$k_4 = f(t+h,\, y+h k_3)$};
-
-\node (update) [process, below of=k4] 
-{$y = y + \frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4)$};
-
-\node (advance) [process, below of=update] 
-{$t = t + h,\; n = n + 1$};
-
-\node (check) [decision, below of=advance, yshift=-0.5cm] 
-{$n < N?$};
-
-\node (stop) [startstop, below of=check, yshift=-0.5cm] {End};
-
-% Arrows
 \draw [arrow] (start) -- (init);
 \draw [arrow] (init) -- (k1);
 \draw [arrow] (k1) -- (k2);
@@ -405,17 +389,14 @@ The weighting reflects the relative importance of each slope in approximating th
 \draw [arrow] (update) -- (advance);
 \draw [arrow] (advance) -- (check);
 \draw [arrow] (check) -- node[right] {No} (stop);
-\draw [arrow] (check.west) -- ++(-3.5,0) -- ++(0,11) -- node[left] {Yes} (k1.west);
+\draw [arrow] (check.west) -- ++(-2.8,0) -- ++(0,8.2) -- node[left] {Yes} (k1.west);
 
 \end{tikzpicture}
-}
 \caption{General flowchart for the RK4 algorithm.}
 \label{fig:rk4-general}
 \end{figure}
 
-
 Figure~\ref{fig:rk4-general} illustrates the structure of the RK4 method. The four slope evaluations and weighted average provide a much more accurate estimate of the integral over each time step, which explains the improved convergence behaviour observed later in the benchmark results.
-\FloatBarrier
 
 \subsubsection{Error Analysis of RK4}
 
@@ -440,7 +421,9 @@ Over $N \sim \frac{1}{h}$ steps, this leads to a global error of
 E_N = \mathcal{O}(h^4).
 \end{equation}
 
-Therefore, the RK4 method is fourth-order accurate. This implies that the error decreases very rapidly as the step size is refined. In practical terms, halving the step size reduces the global error by approximately a factor of $16$, which is a substantial improvement over lower-order methods. Consequently, RK4 is able to achieve high accuracy with relatively large step sizes, making it particularly well-suited to nonlinear systems such as the SIR model. This improved accuracy makes higher-order methods particularly suitable for nonlinear and coupled systems, where small numerical errors can significantly affect the solution behaviour. This improved performance will also be reflected later in both the benchmark convergence plots and the computational time comparison.
+Therefore, the RK4 method is fourth-order accurate. This implies that the error decreases very rapidly as the step size is refined. In practical terms, halving the step size reduces the global error by approximately a factor of $16$, which is a substantial improvement over lower-order methods. Consequently, RK4 is able to achieve high accuracy with relatively large step sizes, making it particularly well-suited to nonlinear systems such as the SIR model. This improved performance is reflected in both the benchmark convergence results and the computational time comparison presented later.
+
+\FloatBarrier
 
 \subsection{Algorithm General and Sample Flowcharts}
 
@@ -453,18 +436,12 @@ with step size $h=0.1$. These examples complement the general flowcharts present
 \begin{figure}[htbp]
 \centering
 
-% -------- RK2 --------
-\begin{minipage}{0.48\textwidth}
+\begin{minipage}{0.47\textwidth}
 \centering
-\resizebox{\textwidth}{!}{
-\begin{tikzpicture}[node distance=1.4cm]
-
-\tikzstyle{startstop} = [ellipse, draw, minimum width=2.5cm, minimum height=0.8cm]
-\tikzstyle{process} = [rectangle, draw, minimum width=3.2cm, minimum height=0.8cm]
-\tikzstyle{arrow} = [->, thick]
+\begin{tikzpicture}[node distance=1.2cm, scale=0.75, every node/.style={scale=0.75}]
 
 \node (start) [startstop] {Start};
-\node (given) [process, below of=start] {Given $\frac{dy}{dx}=e^{2x}$};
+\node (given) [process, below of=start] {Given $\frac{dy}{dx}=e^{2x}$ \\ $x_0=0$, $y_0=1$, $h=0.1$};
 \node (k1) [process, below of=given] {$k_1 = e^{2x_0}$};
 \node (ytemp) [process, below of=k1] {$y^* = y_0 + hk_1$};
 \node (k2) [process, below of=ytemp] {$k_2 = e^{2(x_0+h)}$};
@@ -479,27 +456,21 @@ with step size $h=0.1$. These examples complement the general flowcharts present
 \draw [arrow] (update) -- (end);
 
 \end{tikzpicture}
-}
-\caption*{RK2 Worked Example}
+
+\vspace{0.3em}
+\textbf{(a) RK2 Worked Example}
 \end{minipage}
 \hfill
-
-% -------- RK4 --------
-\begin{minipage}{0.48\textwidth}
+\begin{minipage}{0.47\textwidth}
 \centering
-\resizebox{\textwidth}{!}{
-\begin{tikzpicture}[node distance=1.4cm]
-
-\tikzstyle{startstop} = [ellipse, draw, minimum width=2.5cm, minimum height=0.8cm]
-\tikzstyle{process} = [rectangle, draw, minimum width=3.2cm, minimum height=0.8cm]
-\tikzstyle{arrow} = [->, thick]
+\begin{tikzpicture}[node distance=1.2cm, scale=0.75, every node/.style={scale=0.75}]
 
 \node (start) [startstop] {Start};
-\node (given) [process, below of=start] {Given $\frac{dy}{dx}=e^{2x}$};
-\node (k1) [process, below of=given] {$k_1 = f(t,y)$};
-\node (k2) [process, below of=k1] {$k_2 = f(t+\frac{h}{2}, y+\frac{h}{2}k_1)$};
-\node (k3) [process, below of=k2] {$k_3 = f(t+\frac{h}{2}, y+\frac{h}{2}k_2)$};
-\node (k4) [process, below of=k3] {$k_4 = f(t+h, y+h k_3)$};
+\node (given) [process, below of=start] {Given $\frac{dy}{dx}=e^{2x}$ \\ $x_0=0$, $y_0=1$, $h=0.1$};
+\node (k1) [process, below of=given] {$k_1 = e^{2x_0}$};
+\node (k2) [process, below of=k1] {$k_2 = e^{2(x_0 + \frac{h}{2})}$};
+\node (k3) [process, below of=k2] {$k_3 = e^{2(x_0 + \frac{h}{2})}$};
+\node (k4) [process, below of=k3] {$k_4 = e^{2(x_0 + h)}$};
 \node (update) [process, below of=k4] {$y_1 = y_0 + \frac{h}{6}(k_1+2k_2+2k_3+k_4)$};
 \node (end) [startstop, below of=update] {End};
 
@@ -512,18 +483,18 @@ with step size $h=0.1$. These examples complement the general flowcharts present
 \draw [arrow] (update) -- (end);
 
 \end{tikzpicture}
-}
-\caption*{RK4 Worked Example}
+
+\vspace{0.3em}
+\textbf{(b) RK4 Worked Example}
 \end{minipage}
 
-\caption{Worked flowchart examples for RK2 and RK4 methods}
+\caption{Worked flowchart examples for RK2 and RK4 methods.}
 \label{fig:worked-examples}
-
 \end{figure}
 
-\FloatBarrier
-
 The worked examples demonstrate that RK4 produces a much smaller numerical error than RK2 for the same step size. This is consistent with the theoretical error analysis, where RK2 exhibits $\mathcal{O}(h^2)$ global error and RK4 exhibits $\mathcal{O}(h^4)$ global error. Together with the general flowcharts presented earlier, these examples provide a direct link between the mathematical derivation of the methods and their practical implementation in code.
+
+\FloatBarrier
 
 \subsection{Implementation Summary}
 
@@ -533,7 +504,6 @@ N = \frac{T - t_0}{h}.
 \]
 
 At each step, the solution is updated using the formulas derived above. The primary difference between the methods lies in the number of function evaluations required:
-
 \begin{itemize}
     \item Euler method: 1 evaluation per step,
     \item RK2 method: 2 evaluations per step,
@@ -545,6 +515,18 @@ This difference in computational effort per step is important when comparing run
 For the SIR model, the methods are extended to a system of equations by representing the solution as a vector $\mathbf{y} = [S, I, R]^T$. The update formulas are then applied component-wise, allowing all variables to be advanced simultaneously.
 
 This implementation framework allows direct comparison of accuracy, convergence, and computational cost across the different numerical methods.
+
+\subsubsection{Computational Complexity}
+
+The computational cost of each method can be analysed in terms of the number of function evaluations required. For a simulation with $N$ time steps:
+
+\begin{itemize}
+    \item Euler method requires $N$ function evaluations,
+    \item RK2 requires $2N$ function evaluations,
+    \item RK4 requires $4N$ function evaluations.
+\end{itemize}
+
+Therefore, the computational complexity of all methods is $\mathcal{O}(N)$, but with different constant factors. This distinction is important in practice, as higher-order methods require more work per step but may achieve the same accuracy with significantly fewer steps. This trade-off between cost per step and convergence rate is central to selecting an appropriate numerical method.
 
 \section{Examples and Applications}
 
@@ -582,7 +564,7 @@ Figure~\ref{fig:comparison} compares the numerical and exact solutions for a rep
 \label{fig:comparison}
 \end{figure}
 
-Figure~\ref{fig:convergence} shows the convergence behaviour of the three methods on a log--log scale. The slopes of the curves clearly match the theoretical error orders derived earlier, with Euler exhibiting first-order convergence, RK2 exhibiting second-order convergence, and RK4 exhibiting fourth-order convergence.
+Figure~\ref{fig:convergence} shows the convergence behaviour of the three methods on a log--log scale. The slopes of the curves clearly match the theoretical error orders derived earlier, with Euler exhibiting first-order convergence, RK2 exhibiting second-order convergence, and RK4 exhibiting fourth-order convergence. This agreement between observed and theoretical convergence rates provides strong verification of the correctness of the numerical implementations.
 
 \begin{figure}[H]
 \centering
@@ -591,7 +573,7 @@ Figure~\ref{fig:convergence} shows the convergence behaviour of the three method
 \label{fig:convergence}
 \end{figure}
 
-These results confirm that higher-order methods provide significantly improved accuracy for a given step size. While Euler’s method is simple and computationally efficient, it requires very small step sizes to achieve acceptable accuracy. In contrast, RK4 achieves high accuracy even for relatively large step sizes.
+These results confirm that higher-order methods provide significantly improved accuracy for a given step size. Euler’s method is simple and computationally efficient, but its first-order convergence means that the error decreases relatively slowly as the step size is refined. RK2 provides a clear improvement by reducing the global error quadratically with step size. RK4 performs best, with fourth-order convergence allowing very small errors to be achieved even for moderate step sizes. This demonstrates that a higher computational cost per step can be justified when it leads to substantially improved accuracy.
 
 \subsection{Computational Time Comparison}
 
@@ -604,9 +586,7 @@ In addition to accuracy, the computational cost of each numerical method was ass
 \label{fig:timing}
 \end{figure}
 
-\FloatBarrier
-
-The timing results are consistent with the structure of the methods. Euler’s method is the fastest because it evaluates the derivative only once per step, while RK2 and RK4 require two and four evaluations respectively. Although RK4 has the highest computational cost for a fixed step size, its superior convergence behaviour means that it can achieve a much smaller error with fewer steps overall. Therefore, the most computationally expensive method per step is not necessarily the least efficient method in practice.
+The timing results are consistent with the structure of the methods. Euler’s method is the fastest because it evaluates the derivative only once per step, while RK2 and RK4 require two and four evaluations respectively. However, the benchmark convergence results show that accuracy improves much more rapidly for the higher-order methods. As a result, although RK4 has the highest computational cost per step, it can often achieve a given error tolerance with far fewer steps than Euler’s method. This highlights an important point: the cheapest method per step is not necessarily the most efficient method overall.
 
 \subsection{SIR Model Simulation}
 
@@ -636,6 +616,9 @@ indicating that the infection spreads through the population before eventually d
 \label{fig:sir-rk4}
 \end{figure}
 
+The smooth behaviour of the numerical solution and the absence of non-physical oscillations indicate that the chosen step size is sufficiently small for RK4 to capture the epidemic dynamics reliably.
+This behaviour reflects the depletion of the susceptible population, which reduces the effective reproduction number over time until the infection can no longer sustain itself.
+
 \subsection{Validation of the Numerical Solution}
 
 An important property of the SIR model is conservation of total population:
@@ -650,40 +633,27 @@ The numerical solution satisfied this condition with a maximum deviation of less
 The benchmark and SIR results together demonstrate the trade-off between computational cost and accuracy. Euler’s method is simple and fast but relatively inaccurate. RK2 improves the approximation significantly with a moderate increase in computational cost. RK4 is the most computationally expensive per step, but its superior convergence behaviour and stability make it the most effective method overall.
 
 For nonlinear systems such as the SIR model, where errors can propagate through coupled variables, the improved robustness of higher-order methods becomes particularly important.
-\section{Conclusion}
-Short summary of findings and enumeration of prospective work
 
+\section{Conclusion}
+
+This report investigated the performance of Euler’s method, RK2, and RK4 for solving ordinary differential equations. Using a benchmark problem with known analytical solution, the expected convergence rates were confirmed and the trade-off between computational efficiency and numerical accuracy was demonstrated. Euler’s method was found to be the least accurate, RK2 provided a substantial improvement, and RK4 delivered the highest accuracy together with strong stability characteristics.
+
+The methods were then applied to the nonlinear SIR epidemic model, where RK4 produced accurate, stable, and physically consistent solutions while preserving the total population. Overall, the results show that although higher-order methods require more work per time step, their improved convergence behaviour makes them more effective for solving nonlinear dynamical systems. This highlights the importance of selecting a numerical method based not only on implementation simplicity, but also on the accuracy and reliability required by the problem.
+Among the methods considered, RK4 provides the best balance between accuracy, stability, and computational efficiency for the problems studied.
 \section{Extensions}
-Final statement about relevance and impact
+
+Further work could include the implementation of adaptive step-size methods, comparison with implicit schemes for stiff systems, and exploration of more advanced epidemiological models such as SEIR or age-structured population models. These extensions would provide deeper insight into the role of numerical methods in modelling increasingly realistic and complex dynamical systems.
 
 \section{Bibliography}
-List of references and sources of information that must be cited in main text
+
+\begin{itemize}
+    \item Course lecture notes and workshop material on Euler and Runge--Kutta methods.
+    \item Group Julia notebooks used for the benchmark ODE and SIR model simulations.
+    \item Standard references on numerical methods for ordinary differential equations and epidemic modelling.
+\end{itemize}
 
 \section{Appendix}
 
-\section{Notes}
-•	the main body consists of sections 2-6 (intro to conclusion) and must be between 1500-2500 words (that is the equivalent of a 3-5 pages essay). The Appendix can be as long as desired but it will not be graded. \newline{}
-•	the submitted file format must be a single PDF document. Jupyter Notebooks with extension .ipynb may be included as appendices (see below). Any other formats will be rejected and not be graded. \newline{}
-•	the article must contain at least two (2) figures with caption (description of what the figure conveys) and properly referenced in the main text.\newline{}
-•	any source code written to perform the numerical computations and to produce the article’s results.\newline{}
-•	the file format must either be .jl text files or Jupyter Notebook .ipynb.\newline{}
-•	no Julia packages other than Plots is allowed.\newline{}
-•	source code must be adequately documented.\newline{}
-•	source code must run without error.\newline{}
-•	it must be possible to run all computations on a standard laptop in a reasonable amount of time.\newline{}
-•	an authors declaration: a brief description of each author’s roles and contributions: the document must be signed by all members of the group.\newline{}
+Additional source code, notebook outputs, and any supplementary calculations may be included in the appendix if required.
 
-\section{Marking}
-50 on the report’s content: \newline{}
-  -   20 on the mathematical substance, definitions, the correctness of derivations, technical explanations \newline{}
-   -  10 on the choice of examples/applications, appropriate use of figures, level of sophistication \newline{}
-   -  10 on the clarity, structure and story-line, motivation and context, conclusion and impact \newline{}
-   -  10 on novelty and experimentation \newline{}
-20 on the report’s form: \newline{}
-   -  10 for tidiness, neatness, appropriate use of fonts, typesetting of mathematics, symbols, etc. \newline{}
-   -  10 for visuals, figures and overall aesthetics. \newline{}
-30 about the source code: \newline{}
-    - 10 for code that runs correctly and produces desired results \newline{}
-    - 10 for level of sophistication, speed/efficiency considerations \newline{}
-   -  10 for readability, good coding style/practice and documentation \newline{}
 \end{document}

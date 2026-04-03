@@ -1,24 +1,36 @@
 \contentsline {section}{\numberline {1}Abstract}{3}{}%
 \contentsline {section}{\numberline {2}Introduction}{3}{}%
-\contentsline {section}{\numberline {3}Theory}{4}{}%
-\contentsline {subsection}{\numberline {3.1}Ordinary Differential Equations}{4}{}%
+\contentsline {section}{\numberline {3}Theory}{3}{}%
+\contentsline {subsection}{\numberline {3.1}Ordinary Differential Equations}{3}{}%
 \contentsline {subsection}{\numberline {3.2}Derivation of Numerical Approximation Framework}{4}{}%
 \contentsline {subsection}{\numberline {3.3}Euler's Method}{4}{}%
-\contentsline {subsubsection}{\numberline {3.3.1}Error Analysis of Euler's Method}{5}{}%
-\contentsline {subsection}{\numberline {3.4}Runge-Kutta Methods}{5}{}%
-\contentsline {subsubsection}{\numberline {3.4.1}Second-Order Runge--Kutta Method (RK2)}{5}{}%
-\contentsline {subsubsection}{\numberline {3.4.2}Error Analysis of RK2}{6}{}%
-\contentsline {subsubsection}{\numberline {3.4.3}Fourth-Order Runge--Kutta Method (RK4)}{6}{}%
-\contentsline {subsubsection}{\numberline {3.4.4}Error Analysis of RK4}{6}{}%
-\contentsline {subsection}{\numberline {3.5}The SIR Model}{6}{}%
-\contentsline {subsection}{\numberline {3.6}Basic Reproduction Number}{7}{}%
-\contentsline {subsection}{\numberline {3.7}Conservation of Population}{7}{}%
-\contentsline {subsection}{\numberline {3.8}Implications for Numerical Methods}{7}{}%
-\contentsline {section}{\numberline {4}Numerical Methods}{8}{}%
-\contentsline {section}{\numberline {5}Examples and Applications}{8}{}%
-\contentsline {section}{\numberline {6}Conclusion}{8}{}%
-\contentsline {section}{\numberline {7}Extensions}{8}{}%
-\contentsline {section}{\numberline {8}Bibliography}{8}{}%
-\contentsline {section}{\numberline {9}Appendix}{8}{}%
-\contentsline {section}{\numberline {10}Notes}{8}{}%
-\contentsline {section}{\numberline {11}Marking}{9}{}%
+\contentsline {subsubsection}{\numberline {3.3.1}Error Analysis of Euler's Method}{4}{}%
+\contentsline {subsection}{\numberline {3.4}Runge-Kutta Methods}{4}{}%
+\contentsline {subsubsection}{\numberline {3.4.1}Second-Order Runge--Kutta Method (RK2)}{4}{}%
+\contentsline {subsubsection}{\numberline {3.4.2}Error Analysis of RK2}{5}{}%
+\contentsline {subsubsection}{\numberline {3.4.3}Fourth-Order Runge--Kutta Method (RK4)}{5}{}%
+\contentsline {subsubsection}{\numberline {3.4.4}Error Analysis of RK4}{5}{}%
+\contentsline {subsection}{\numberline {3.5}The SIR Model}{5}{}%
+\contentsline {subsection}{\numberline {3.6}Basic Reproduction Number}{6}{}%
+\contentsline {subsection}{\numberline {3.7}Conservation of Population}{6}{}%
+\contentsline {subsection}{\numberline {3.8}Implications for Numerical Methods}{6}{}%
+\contentsline {section}{\numberline {4}Numerical Methods}{6}{}%
+\contentsline {subsection}{\numberline {4.1}Euler Method Implementation}{6}{}%
+\contentsline {subsection}{\numberline {4.2}Second-Order Runge--Kutta Method (RK2)}{8}{}%
+\contentsline {subsubsection}{\numberline {4.2.1}Error Analysis of RK2}{8}{}%
+\contentsline {subsection}{\numberline {4.3}Fourth-Order Runge--Kutta Method (RK4)}{10}{}%
+\contentsline {subsubsection}{\numberline {4.3.1}Error Analysis of RK4}{12}{}%
+\contentsline {subsection}{\numberline {4.4}Algorithm General and Sample Flowcharts}{12}{}%
+\contentsline {subsection}{\numberline {4.5}Implementation Summary}{14}{}%
+\contentsline {section}{\numberline {5}Examples and Applications}{14}{}%
+\contentsline {subsection}{\numberline {5.1}Benchmark Problem}{14}{}%
+\contentsline {subsection}{\numberline {5.2}Computational Time Comparison}{16}{}%
+\contentsline {subsection}{\numberline {5.3}SIR Model Simulation}{17}{}%
+\contentsline {subsection}{\numberline {5.4}Validation of the Numerical Solution}{18}{}%
+\contentsline {subsection}{\numberline {5.5}Overall Comparison}{18}{}%
+\contentsline {section}{\numberline {6}Conclusion}{18}{}%
+\contentsline {section}{\numberline {7}Extensions}{18}{}%
+\contentsline {section}{\numberline {8}Bibliography}{19}{}%
+\contentsline {section}{\numberline {9}Appendix}{19}{}%
+\contentsline {section}{\numberline {10}Notes}{19}{}%
+\contentsline {section}{\numberline {11}Marking}{19}{}%
