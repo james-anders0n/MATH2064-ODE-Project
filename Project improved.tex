@@ -648,16 +648,29 @@ These results confirm that higher-order methods provide significantly improved a
 
 \subsection{Computational Time Comparison}
 
-In addition to accuracy, the computational cost of each numerical method was assessed using the benchmark problem. The average runtime of Euler’s method, RK2, and RK4 was measured over repeated simulations using the same step size.
+In addition to accuracy, the computational cost of each numerical method was assessed using the benchmark problem. The average runtime of Euler’s method, RK2, and RK4 was measured over repeated simulations using the same step size. The results are shown in Figure~7.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.75\textwidth]{timing_plot.png}
+\includegraphics[width=0.75\textwidth]{timing_comparison.png}
 \caption{Average computational time for Euler, RK2, and RK4 on the benchmark problem.}
-\label{fig:timing}
+\label{fig:timing_comparison}
 \end{figure}
 
-The timing results are consistent with the structure of the methods. Euler’s method is the fastest because it evaluates the derivative only once per step, while RK2 and RK4 require two and four evaluations respectively. However, the benchmark convergence results show that accuracy improves much more rapidly for the higher-order methods. As a result, although RK4 has the highest computational cost per step, it can often achieve a given error tolerance with far fewer steps than Euler’s method. This highlights an important point: the cheapest method per step is not necessarily the most efficient method overall \cite{4}.
+The timing results are consistent with the structure of the methods. Euler’s method is the fastest because it evaluates the derivative only once per step, while RK2 and RK4 require two and four evaluations respectively. This confirms the theoretical computational complexity discussed earlier, where all methods scale linearly with the number of time steps, but differ in the constant amount of work required per step.
+
+However, runtime alone does not provide a complete measure of efficiency. A method that is cheaper per step may still require many more steps to achieve the same level of accuracy. To account for this, the numerical error was also compared against the total number of function evaluations, as shown in Figure~8.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.75\textwidth]{error_vs_function_evaluations.png}
+\caption{Maximum global error as a function of the number of function evaluations for Euler, RK2, and RK4.}
+\label{fig:error_fevals}
+\end{figure}
+
+Figure~\ref{fig:error_fevals} provides a more meaningful comparison of overall efficiency because it relates accuracy directly to computational effort. Although RK4 performs the largest number of function evaluations per step, it achieves substantially smaller errors for a given computational cost. RK2 also outperforms Euler when accuracy is measured relative to the number of derivative evaluations. This shows that higher-order methods, while more expensive on a per-step basis, can be more efficient overall because they reduce the error much more rapidly.
+
+Taken together, Figures~7 and~8 highlight the trade-off between raw runtime and numerical efficiency. Euler’s method remains the cheapest method per step, but its low order of accuracy makes it inefficient when high precision is required. RK4 has the greatest per-step cost, yet its superior convergence behaviour allows it to achieve a much lower error for comparable computational effort. Therefore, the cheapest method per step is not necessarily the most effective method overall.
 
 \subsection{SIR Model Simulation}
 

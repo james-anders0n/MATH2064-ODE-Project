@@ -26,23 +26,23 @@
 \contentsline {section}{\numberline {5}Examples and Applications}{14}{}%
 \contentsline {subsection}{\numberline {5.1}Benchmark Problem}{15}{}%
 \contentsline {subsection}{\numberline {5.2}Computational Time Comparison}{16}{}%
-\contentsline {subsection}{\numberline {5.3}SIR Model Simulation}{17}{}%
-\contentsline {subsection}{\numberline {5.4}Validation of the Numerical Solution}{18}{}%
-\contentsline {subsection}{\numberline {5.5}Overall Comparison}{18}{}%
-\contentsline {section}{\numberline {6}Conclusion}{19}{}%
-\contentsline {section}{\numberline {7}Extensions}{19}{}%
-\contentsline {section}{\numberline {8}Bibliography}{19}{}%
-\contentsline {section}{\numberline {9}Appendix}{20}{}%
-\contentsline {subsection}{\numberline {9.1}Benchmark Julia Code}{20}{}%
-\contentsline {subsection}{\numberline {9.2}Observed Convergence Behaviour}{21}{}%
-\contentsline {subsection}{\numberline {9.3}Error Ratio Analysis}{21}{}%
-\contentsline {subsection}{\numberline {9.4}Step Size Sensitivity and Stability}{21}{}%
-\contentsline {subsection}{\numberline {9.5}Numerical Artefacts}{22}{}%
-\contentsline {subsection}{\numberline {9.6}SIR Model Implementation}{22}{}%
-\contentsline {subsection}{\numberline {9.7}Extended SIR Simulations}{22}{}%
-\contentsline {subsubsection}{\numberline {9.7.1}Effect of Initial Infection Level}{22}{}%
-\contentsline {subsubsection}{\numberline {9.7.2}Effect of Basic Reproduction Number}{23}{}%
-\contentsline {subsubsection}{\numberline {9.7.3}Numerical Observations}{23}{}%
-\contentsline {subsection}{\numberline {9.8}Validation of Conservation Law}{23}{}%
-\contentsline {subsection}{\numberline {9.9}Implementation Considerations}{23}{}%
-\contentsline {subsection}{\numberline {9.10}Appendix Summary}{24}{}%
+\contentsline {subsection}{\numberline {5.3}SIR Model Simulation}{18}{}%
+\contentsline {subsection}{\numberline {5.4}Validation of the Numerical Solution}{19}{}%
+\contentsline {subsection}{\numberline {5.5}Overall Comparison}{19}{}%
+\contentsline {section}{\numberline {6}Conclusion}{20}{}%
+\contentsline {section}{\numberline {7}Extensions}{20}{}%
+\contentsline {section}{\numberline {8}Bibliography}{20}{}%
+\contentsline {section}{\numberline {9}Appendix}{21}{}%
+\contentsline {subsection}{\numberline {9.1}Benchmark Julia Code}{21}{}%
+\contentsline {subsection}{\numberline {9.2}Observed Convergence Behaviour}{22}{}%
+\contentsline {subsection}{\numberline {9.3}Error Ratio Analysis}{22}{}%
+\contentsline {subsection}{\numberline {9.4}Step Size Sensitivity and Stability}{22}{}%
+\contentsline {subsection}{\numberline {9.5}Numerical Artefacts}{23}{}%
+\contentsline {subsection}{\numberline {9.6}SIR Model Implementation}{23}{}%
+\contentsline {subsection}{\numberline {9.7}Extended SIR Simulations}{23}{}%
+\contentsline {subsubsection}{\numberline {9.7.1}Effect of Initial Infection Level}{23}{}%
+\contentsline {subsubsection}{\numberline {9.7.2}Effect of Basic Reproduction Number}{24}{}%
+\contentsline {subsubsection}{\numberline {9.7.3}Numerical Observations}{24}{}%
+\contentsline {subsection}{\numberline {9.8}Validation of Conservation Law}{24}{}%
+\contentsline {subsection}{\numberline {9.9}Implementation Considerations}{24}{}%
+\contentsline {subsection}{\numberline {9.10}Appendix Summary}{25}{}%
