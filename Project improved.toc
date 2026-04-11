@@ -6,43 +6,42 @@
 \contentsline {subsection}{\numberline {3.3}Euler's Method}{5}{}%
 \contentsline {subsubsection}{\numberline {3.3.1}Error Analysis of Euler's Method}{5}{}%
 \contentsline {subsection}{\numberline {3.4}Runge-Kutta Methods}{5}{}%
-\contentsline {subsubsection}{\numberline {3.4.1}Second-Order Runge--Kutta Method (RK2)}{6}{}%
+\contentsline {subsubsection}{\numberline {3.4.1}Second-Order Runge--Kutta Method (RK2)}{5}{}%
 \contentsline {subsubsection}{\numberline {3.4.2}Error Analysis of RK2}{6}{}%
-\contentsline {subsubsection}{\numberline {3.4.3}Fourth-Order Runge--Kutta Method (RK4)}{7}{}%
+\contentsline {subsubsection}{\numberline {3.4.3}Fourth-Order Runge--Kutta Method (RK4)}{6}{}%
 \contentsline {subsubsection}{\numberline {3.4.4}Error Analysis of RK4}{7}{}%
-\contentsline {subsection}{\numberline {3.5}The SIR Model}{8}{}%
+\contentsline {subsection}{\numberline {3.5}The SIR Model}{7}{}%
 \contentsline {subsection}{\numberline {3.6}Basic Reproduction Number}{8}{}%
 \contentsline {subsection}{\numberline {3.7}Conservation of Population}{8}{}%
-\contentsline {subsection}{\numberline {3.8}Implications for Numerical Methods}{9}{}%
-\contentsline {section}{\numberline {4}Numerical Methods}{9}{}%
-\contentsline {subsection}{\numberline {4.1}Euler Method Implementation}{9}{}%
-\contentsline {subsection}{\numberline {4.2}Second-Order Runge--Kutta Method (RK2)}{10}{}%
-\contentsline {subsubsection}{\numberline {4.2.1}Error Analysis of RK2}{11}{}%
-\contentsline {subsection}{\numberline {4.3}Fourth-Order Runge--Kutta Method (RK4)}{11}{}%
-\contentsline {subsubsection}{\numberline {4.3.1}Error Analysis of RK4}{12}{}%
-\contentsline {subsection}{\numberline {4.4}Algorithm General and Sample Flowcharts}{13}{}%
-\contentsline {subsection}{\numberline {4.5}Implementation Summary}{14}{}%
-\contentsline {subsubsection}{\numberline {4.5.1}Computational Complexity}{14}{}%
-\contentsline {section}{\numberline {5}Examples and Applications}{14}{}%
-\contentsline {subsection}{\numberline {5.1}Benchmark Problem}{15}{}%
-\contentsline {subsection}{\numberline {5.2}Computational Time Comparison}{16}{}%
-\contentsline {subsection}{\numberline {5.3}SIR Model Simulation}{18}{}%
-\contentsline {subsection}{\numberline {5.4}Validation of the Numerical Solution}{19}{}%
-\contentsline {subsection}{\numberline {5.5}Overall Comparison}{19}{}%
-\contentsline {section}{\numberline {6}Conclusion}{20}{}%
-\contentsline {section}{\numberline {7}Extensions}{20}{}%
-\contentsline {section}{\numberline {8}Bibliography}{20}{}%
-\contentsline {section}{\numberline {9}Appendix}{21}{}%
-\contentsline {subsection}{\numberline {9.1}Benchmark Julia Code}{21}{}%
-\contentsline {subsection}{\numberline {9.2}Observed Convergence Behaviour}{22}{}%
-\contentsline {subsection}{\numberline {9.3}Error Ratio Analysis}{22}{}%
-\contentsline {subsection}{\numberline {9.4}Step Size Sensitivity and Stability}{22}{}%
-\contentsline {subsection}{\numberline {9.5}Numerical Artefacts}{23}{}%
-\contentsline {subsection}{\numberline {9.6}SIR Model Implementation}{23}{}%
-\contentsline {subsection}{\numberline {9.7}Extended SIR Simulations}{23}{}%
-\contentsline {subsubsection}{\numberline {9.7.1}Effect of Initial Infection Level}{23}{}%
-\contentsline {subsubsection}{\numberline {9.7.2}Effect of Basic Reproduction Number}{24}{}%
-\contentsline {subsubsection}{\numberline {9.7.3}Numerical Observations}{24}{}%
-\contentsline {subsection}{\numberline {9.8}Validation of Conservation Law}{24}{}%
-\contentsline {subsection}{\numberline {9.9}Implementation Considerations}{24}{}%
-\contentsline {subsection}{\numberline {9.10}Appendix Summary}{25}{}%
+\contentsline {subsection}{\numberline {3.8}Implications for Numerical Methods}{8}{}%
+\contentsline {section}{\numberline {4}Numerical Methods}{8}{}%
+\contentsline {subsection}{\numberline {4.1}Euler Method Implementation}{8}{}%
+\contentsline {subsection}{\numberline {4.2}Second-Order Runge--Kutta Method (RK2)}{9}{}%
+\contentsline {subsubsection}{\numberline {4.2.1}Error Analysis of RK2}{9}{}%
+\contentsline {subsection}{\numberline {4.3}Fourth-Order Runge--Kutta Method (RK4)}{9}{}%
+\contentsline {subsubsection}{\numberline {4.3.1}Error Analysis of RK4}{10}{}%
+\contentsline {subsection}{\numberline {4.4}Algorithm General and Sample Flowcharts}{10}{}%
+\contentsline {subsection}{\numberline {4.5}Implementation Summary}{12}{}%
+\contentsline {section}{\numberline {5}Examples and Applications}{12}{}%
+\contentsline {subsection}{\numberline {5.1}Benchmark Problem}{12}{}%
+\contentsline {subsection}{\numberline {5.2}Computational Time Comparison}{14}{}%
+\contentsline {subsection}{\numberline {5.3}SIR Model Simulation}{16}{}%
+\contentsline {subsection}{\numberline {5.4}Validation of the Numerical Solution}{16}{}%
+\contentsline {subsection}{\numberline {5.5}Overall Comparison}{17}{}%
+\contentsline {section}{\numberline {6}Conclusion}{17}{}%
+\contentsline {section}{\numberline {7}Extensions}{17}{}%
+\contentsline {section}{\numberline {8}Bibliography}{17}{}%
+\contentsline {section}{\numberline {9}Appendix}{18}{}%
+\contentsline {subsection}{\numberline {9.1}Benchmark Julia Code}{18}{}%
+\contentsline {subsection}{\numberline {9.2}Observed Convergence Behaviour}{19}{}%
+\contentsline {subsection}{\numberline {9.3}Error Ratio Analysis}{19}{}%
+\contentsline {subsection}{\numberline {9.4}Step Size Sensitivity and Stability}{19}{}%
+\contentsline {subsection}{\numberline {9.5}Numerical Artefacts}{19}{}%
+\contentsline {subsection}{\numberline {9.6}SIR Model Implementation}{20}{}%
+\contentsline {subsection}{\numberline {9.7}Extended SIR Simulations}{20}{}%
+\contentsline {subsubsection}{\numberline {9.7.1}Effect of Initial Infection Level}{20}{}%
+\contentsline {subsubsection}{\numberline {9.7.2}Effect of Basic Reproduction Number}{21}{}%
+\contentsline {subsubsection}{\numberline {9.7.3}Numerical Observations}{21}{}%
+\contentsline {subsection}{\numberline {9.8}Validation of Conservation Law}{21}{}%
+\contentsline {subsection}{\numberline {9.9}Implementation Considerations}{21}{}%
+\contentsline {subsection}{\numberline {9.10}Appendix Summary}{22}{}%

@@ -57,13 +57,10 @@ This paper investigates the performance of several numerical methods for solving
 
 \section{Introduction}
 
-Ordinary Differential Equations (ODEs) describe systems in which variables evolve over time according to specified rates of change \cite{2}. These equations are fundamental in many disciplines, including engineering (fluid flow and heat transfer systems), physics (oscillations and motion), and biology (population dynamics and epidemiology).
-
-In many practical situations, ODE systems are nonlinear, coupled, and do not admit simple analytical solutions. As a result, numerical methods must be implemented to approximate their behaviour \cite{1}. These methods discretise the time domain and compute approximate solutions at discrete points, allowing complex systems to be analysed and predicted.
-
-Within epidemiology, modelling the spread of infectious disease is a dynamic problem of significant importance. Mathematical models help predict outbreaks, estimate peak infection levels, and inform public health decisions. One of the most widely used models is the SIR model, which divides a population into susceptible, infected, and recovered compartments.
-
-This report investigates the performance of several numerical methods for solving ODEs, with particular focus on Euler’s method, the second-order Runge--Kutta method (RK2), and the fourth-order Runge--Kutta method (RK4). The methods are first evaluated using a simple ODE with a known analytical solution, before being applied to the nonlinear SIR model. The accuracy, stability, and computational efficiency of each method are compared to determine their suitability for different types of problems \cite{4}.
+Ordinary Differential Equations (ODEs) describe systems in which variables evolve over time according to specified rates of change \cite{2,13}. They are fundamental in many disciplines, including engineering, physics, and biology, where they are used to model dynamic processes such as fluid flow, motion, population dynamics, and epidemiology.
+In many practical situations, ODE systems are nonlinear and coupled, so analytical solutions are often unavailable. Numerical methods are therefore required to approximate their behaviour by discretising time and computing solutions at discrete points \cite{1,3}.
+Within epidemiology, modelling the spread of infectious disease is an important dynamic problem. Mathematical compartment models such as SIR provide a useful framework for predicting outbreaks, estimating peak infection levels, and informing public health decisions \cite{8,14}.
+This report investigates Euler, RK2, and RK4 methods using a benchmark ODE and the nonlinear SIR model, comparing accuracy, stability, and computational efficiency \cite{4}.
 
 \section{Theory}
 
@@ -120,7 +117,7 @@ k_2 &= f(t_n + h, y_n + h k_1), \\
 y_{n+1} &= y_n + \frac{h}{2}(k_1 + k_2).
 \end{align}
 
-The RK2 method improves upon Euler’s method by incorporating information about the slope at both the beginning and end of the interval \cite{2}. This allows the method to better capture variation in the slope across the step, improving the approximation of the solution. As a result, RK2 achieves second-order accuracy \cite{2} and provides significantly improved results compared to Euler’s method, with only a moderate increase in computational cost.
+This improves the approximation of the solution, giving second-order accuracy with moderate additional cost \cite{2}.
 
 \subsubsection{Error Analysis of RK2}
 
@@ -174,7 +171,7 @@ k_4 &= f(t_n + h, y_n + h k_3),
 y_{n+1} = y_n + \frac{h}{6}(k_1 + 2k_2 + 2k_3 + k_4).
 \end{equation}
 
-The RK4 method evaluates the slope at four points within each time step and combines them using a weighted average. This enables the method to accurately capture higher-order behaviour of the solution, including curvature and variation in the slope \cite{1}. As a result, RK4 achieves fourth-order accuracy \cite{1} and typically produces highly accurate results even for relatively large step sizes.
+The RK4 method evaluates the slope at four points within each time step and combines them using a weighted average. This captures higher-order behaviour of the solution, giving fourth-order accuracy even for relatively large step sizes \cite{1}.
 
 This construction can also be interpreted as a quadrature rule \cite{10} for approximating the integral in Equation (2), where the weights are chosen to maximise accuracy up to fourth order.
 
@@ -261,20 +258,16 @@ The SIR system is nonlinear and coupled, making it sensitive to numerical errors
 
 \section{Numerical Methods}
 
-In this section, the numerical schemes derived in the previous section are translated into practical algorithms \cite{3}. While the theory focused on the approximation of the integral form of the governing equations, the purpose here is to describe how these methods are implemented and applied in a computational setting.
-
-Each method advances the solution iteratively using a fixed time step $h$, allowing the solution to be approximated over a specified interval. The differences between the methods arise from how the integral in Equation (2) is approximated, which directly impacts both accuracy and computational cost.
+In this section, the numerical schemes derived previously are implemented as algorithms \cite{3}, differing primarily in the number of slope evaluations per step.
 
 \subsection{Euler Method Implementation}
 
-Euler’s method provides the simplest numerical implementation of the integral approximation introduced in the theory section. The solution is advanced using the slope evaluated at the beginning of each time step:
+Euler’s method implements the update formula derived in the theory section:
 \[
 y_{n+1} = y_n + h f(t_n, y_n).
 \]
 
-The method is implemented iteratively, starting from the initial condition $y_0$. At each time step, the derivative function is evaluated once, and the solution is updated accordingly.
-
-Due to its simplicity, Euler’s method is computationally efficient and easy to implement \cite{3}. However, because it assumes the slope remains constant over the interval, it introduces relatively large numerical errors unless a sufficiently small step size is used. As a result, it is primarily useful as a baseline method for comparison with higher-order schemes.
+The derivative is evaluated once per step, making Euler’s method inexpensive but sensitive to step size \cite{3}.
 
 \begin{figure}[htbp]
 \centering
@@ -301,38 +294,29 @@ Due to its simplicity, Euler’s method is computationally efficient and easy to
 \label{fig:euler-general}
 \end{figure}
 
-Figure~\ref{fig:euler-general} shows the general algorithmic structure of Euler’s method. The method requires only one slope evaluation per step, which explains its low computational cost, but this simplicity comes at the expense of lower accuracy.
+Figure~\ref{fig:euler-general} shows the general algorithmic structure of Euler’s method. Its single slope evaluation per step explains its low computational cost, but also its lower accuracy relative to higher-order methods.
 
 \subsection{Second-Order Runge--Kutta Method (RK2)}
 
-The second-order Runge--Kutta (RK2) method improves upon Euler’s method by incorporating information about the slope at multiple points within each time step, rather than relying solely on the slope at the beginning of the interval. This results in a more accurate approximation of the integral in Equation (2) \cite{2}, and consequently a better approximation of the solution.
-
-To construct the method, we again consider the integral form:
+RK2 improves on Euler’s method by using two slope evaluations within each time step to approximate the average slope over the interval \cite{2}. Using the formulation derived in Section 3, the method computes
 \begin{equation}
-y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f(t,y(t)) \, dt.
+k_1 = f(t_n, y_n),
 \end{equation}
-
-Instead of approximating the integrand as constant (as in Euler’s method), RK2 approximates the average slope over the interval by evaluating the derivative at both the beginning and the end of the step. First, an initial estimate of the slope is computed:
+predicts
 \begin{equation}
-k_1 = f(t_n, y_n).
+y_n^{*} = y_n + h k_1,
 \end{equation}
-
-This is used to predict a provisional value at the end of the interval:
-\begin{equation}
-y_n^{*} = y_n + h k_1.
-\end{equation}
-
-A second slope is then evaluated at this predicted point:
+then evaluates
 \begin{equation}
 k_2 = f(t_n + h, y_n^{*}).
 \end{equation}
 
-The solution is then advanced using the average of these two slopes:
+The solution is advanced using
 \begin{equation}
 y_{n+1} = y_n + \frac{h}{2}(k_1 + k_2).
 \end{equation}
 
-Geometrically, this method can be interpreted as averaging the slope at the beginning and the end of the interval, thereby accounting for variation in the derivative across the step.
+This improves the approximation of the average slope over the interval.
 
 \begin{figure}[htbp]
 \centering
@@ -363,78 +347,35 @@ Geometrically, this method can be interpreted as averaging the slope at the begi
 \label{fig:rk2-general}
 \end{figure}
 
-Figure~\ref{fig:rk2-general} shows the general implementation of the RK2 method. Compared with Euler’s method, the additional prediction and second slope evaluation allow the method to better approximate the average slope over the interval.
+Figure~\ref{fig:rk2-general} shows the general implementation of RK2. The extra prediction and second slope evaluation improve accuracy at moderate additional cost.
 
 \subsubsection{Error Analysis of RK2}
 
-To analyse the error, we again consider the Taylor series expansion of the exact solution about $t_n$:
-\begin{equation}
-y(t_{n+1}) = y(t_n) + h y'(t_n) + \frac{h^2}{2} y''(t_n) + \frac{h^3}{6} y'''(\xi),
-\end{equation}
-for some $\xi \in [t_n, t_{n+1}]$.
-
-We now expand the RK2 update. Using $k_1 = f(t_n, y_n) = y'(t_n)$, and noting that
-\begin{equation}
-k_2 = f(t_n + h, y_n + h k_1),
-\end{equation}
-we expand $k_2$ about $(t_n, y_n)$:
-\begin{equation}
-k_2 = y'(t_n) + h \frac{\partial f}{\partial t} + h y'(t_n)\frac{\partial f}{\partial y} + \mathcal{O}(h^2).
-\end{equation}
-
-Combining terms, the RK2 update becomes
-\begin{equation}
-y_{n+1} = y_n + h y'(t_n) + \frac{h^2}{2} y''(t_n) + \mathcal{O}(h^3).
-\end{equation}
-
-Comparing with the exact Taylor expansion, we see that RK2 correctly reproduces all terms up to order $h^2$, and neglects terms of order $h^3$ and higher. Therefore, the local truncation error is
-\begin{equation}
-\tau_n = \mathcal{O}(h^3).
-\end{equation}
-
-Over $N \sim \frac{1}{h}$ steps, this accumulates to a global error of
-\begin{equation}
-E_N = \mathcal{O}(h^2).
-\end{equation}
-
-The RK2 method is second-order accurate. This represents a significant improvement over Euler’s method, as the error decreases quadratically with step size rather than linearly. In practical terms, this allows for larger step sizes to be used while maintaining a comparable level of accuracy. This behaviour will be examined later in the benchmark problem through convergence results.
+The truncation and global error behaviour of RK2 were derived in Section 3. In summary, RK2 has local truncation error $\mathcal{O}(h^3)$ and global error $\mathcal{O}(h^2)$, giving second-order convergence. This higher accuracy relative to Euler’s method is reflected later in the benchmark results, where the observed convergence rate agrees with the theoretical prediction.
 
 \subsection{Fourth-Order Runge--Kutta Method (RK4)}
 
-The fourth-order Runge--Kutta (RK4) method further refines the approximation of the integral in Equation (2) by evaluating the slope at multiple intermediate points within each time step and combining them in a weighted average. This approach provides a highly accurate estimate of the average slope over the interval \cite{1}, allowing the method to capture both curvature and higher-order behaviour of the solution.
-
-Starting again from the integral formulation,
+The fourth-order Runge--Kutta (RK4) method uses four slope evaluations within each time step to obtain a more accurate approximation of the solution \cite{1}. Using the formulation derived in Section 3, the method computes
 \begin{equation}
-y(t_{n+1}) = y(t_n) + \int_{t_n}^{t_{n+1}} f(t,y(t)) \, dt,
+k_1 = f(t_n, y_n),
 \end{equation}
-the RK4 method approximates the integral using four slope evaluations.
-
-First, the slope at the beginning of the interval is computed:
 \begin{equation}
-k_1 = f(t_n, y_n).
+k_2 = f\left(t_n + \frac{h}{2}, y_n + \frac{h}{2}k_1\right),
 \end{equation}
-
-A second slope is evaluated at the midpoint using $k_1$:
 \begin{equation}
-k_2 = f\left(t_n + \frac{h}{2}, y_n + \frac{h}{2}k_1\right).
+k_3 = f\left(t_n + \frac{h}{2}, y_n + \frac{h}{2}k_2\right),
 \end{equation}
-
-A third slope is again evaluated at the midpoint, now using $k_2$:
-\begin{equation}
-k_3 = f\left(t_n + \frac{h}{2}, y_n + \frac{h}{2}k_2\right).
-\end{equation}
-
-Finally, a fourth slope is evaluated at the end of the interval using $k_3$:
+and
 \begin{equation}
 k_4 = f(t_n + h, y_n + h k_3).
 \end{equation}
 
-These slopes are combined in a weighted average to advance the solution:
+These are combined to give
 \begin{equation}
 y_{n+1} = y_n + \frac{h}{6}\left(k_1 + 2k_2 + 2k_3 + k_4\right).
 \end{equation}
 
-The weighting reflects the relative importance of each slope in approximating the integral, with greater weight placed on the midpoint evaluations. Geometrically, RK4 can be interpreted as constructing a highly accurate estimate of the average slope over the interval by sampling the curve at chosen points. This allows the method to closely track the true trajectory of the solution even if the derivative varies significantly within a single step.
+By sampling the slope at multiple points, RK4 captures variation within the step much more effectively \cite{10}.
 
 \begin{figure}[htbp]
 \centering
@@ -467,34 +408,11 @@ The weighting reflects the relative importance of each slope in approximating th
 \label{fig:rk4-general}
 \end{figure}
 
-Figure~\ref{fig:rk4-general} illustrates the structure of the RK4 method. The four slope evaluations and weighted average provide a much more accurate estimate of the integral over each time step, which explains the improved convergence behaviour observed later in the benchmark results.
+Figure~\ref{fig:rk4-general} illustrates the structure of the RK4 method. The additional slope evaluations increase per-step cost, but substantially improve accuracy.
 
 \subsubsection{Error Analysis of RK4}
 
-To analyse the error, we again consider the Taylor series expansion of the exact solution:
-\begin{equation}
-y(t_{n+1}) = y(t_n) + h y'(t_n) + \frac{h^2}{2} y''(t_n) + \frac{h^3}{6} y'''(t_n) + \frac{h^4}{24} y^{(4)}(t_n) + \frac{h^5}{120} y^{(5)}(\xi),
-\end{equation}
-for some $\xi \in [t_n, t_{n+1}]$.
-
-The RK4 method constructs its update by combining the four slope evaluations. Expanding each $k_i$ about $(t_n, y_n)$ and substituting into the update formula yields
-\begin{equation}
-y_{n+1} = y_n + h y'(t_n) + \frac{h^2}{2} y''(t_n) + \frac{h^3}{6} y'''(t_n) + \frac{h^4}{24} y^{(4)}(t_n) + \mathcal{O}(h^5).
-\end{equation}
-
-The RK4 update matches the Taylor expansion of the true solution up to terms of order $h^4$, with discrepancies only appearing at order $h^5$. The local truncation error is therefore
-\begin{equation}
-\tau_n = \mathcal{O}(h^5).
-\end{equation}
-
-Over $N \sim \frac{1}{h}$ steps, this leads to a global error of
-\begin{equation}
-E_N = \mathcal{O}(h^4).
-\end{equation}
-
-Therefore, the RK4 method is fourth-order accurate. This implies that the error decreases very rapidly as the step size is refined. In practical terms, halving the step size reduces the global error by approximately a factor of $16$, which is a substantial improvement over lower-order methods. Consequently, RK4 is able to achieve high accuracy with relatively large step sizes, making it particularly well-suited to nonlinear systems such as the SIR model. This improved performance is reflected in both the benchmark convergence results and the computational time comparison presented later.
-
-\FloatBarrier
+The full error derivation for RK4 is given in Section 3. In summary, RK4 has local truncation error $\mathcal{O}(h^5)$ and global error $\mathcal{O}(h^4)$, giving fourth-order convergence. This explains the strong accuracy of RK4 observed later in the benchmark and SIR results.
 
 \subsection{Algorithm General and Sample Flowcharts}
 
@@ -502,7 +420,7 @@ To further demonstrate how the algorithms operate in practice, worked flowcharts
 \[
 \frac{dy}{dx} = e^{2x}, \qquad y(0)=1,
 \]
-with step size $h=0.1$. These examples complement the general flowcharts presented earlier and show how the numerical updates are carried out step-by-step, providing a direct illustration of the difference in accuracy between the two methods.
+with step size $h=0.1$. These examples complement the general flowcharts presented earlier and illustrate the sequence of updates used by each method.
 
 \begin{figure}[htbp]
 \centering
@@ -563,45 +481,31 @@ with step size $h=0.1$. These examples complement the general flowcharts present
 \label{fig:worked-examples}
 \end{figure}
 
-The worked examples demonstrate that RK4 produces a much smaller numerical error than RK2 for the same step size. This is consistent with the theoretical error analysis, where RK2 exhibits $\mathcal{O}(h^2)$ global error and RK4 exhibits $\mathcal{O}(h^4)$ global error. Together with the general flowcharts presented earlier, these examples provide a direct link between the mathematical derivation of the methods and their practical implementation in code.
+The worked examples illustrate the update structure and improved accuracy of RK4.
 
 \FloatBarrier
 
 \subsection{Implementation Summary}
 
-Although the methods differ in their mathematical formulation, they are all implemented using a time-stepping procedure. For a given step size $h$, the total number of steps is
+All methods use a time-stepping approach with
 \[
 N = \frac{T - t_0}{h}.
 \]
 
-At each step, the solution is updated using the formulas derived above. The primary difference between the methods lies in the number of function evaluations required:
+The primary difference is the number of function evaluations per step:
 \begin{itemize}
-    \item Euler method: 1 evaluation per step,
-    \item RK2 method: 2 evaluations per step,
-    \item RK4 method: 4 evaluations per step.
+    \item Euler: 1 evaluation,
+    \item RK2: 2 evaluations,
+    \item RK4: 4 evaluations.
 \end{itemize}
 
-This difference in computational effort per step is important when comparing runtime, and will be reflected later in the computational time graph.
+Thus, all methods have computational complexity $\mathcal{O}(N)$, but with different constant factors. Higher-order methods require more work per step, but typically achieve the same accuracy with fewer steps \cite{5,20}.
 
-For the SIR model, the methods are extended to a system of equations by representing the solution as a vector $\mathbf{y} = [S, I, R]^T$. The update formulas are then applied component-wise, allowing all variables to be advanced simultaneously.
-
-This implementation framework allows direct comparison of accuracy, convergence, and computational cost across the different numerical methods \cite{4}.
-
-\subsubsection{Computational Complexity}
-
-The computational cost of each method can be analysed in terms of the number of function evaluations required. For a simulation with $N$ time steps:
-
-\begin{itemize}
-    \item Euler method requires $N$ function evaluations,
-    \item RK2 requires $2N$ function evaluations,
-    \item RK4 requires $4N$ function evaluations.
-\end{itemize}
-
-Therefore, the computational complexity of all methods is $\mathcal{O}(N)$, but with different constant factors. This distinction is important in practice, as higher-order methods require more work per step but may achieve the same accuracy with significantly fewer steps. This trade-off between cost per step and convergence rate is central to selecting an appropriate numerical method \cite{5}, particularly in large-scale simulations where efficiency is critical \cite{20}.
+For the SIR system, updates are applied component-wise to $\mathbf{y} = [S, I, R]^T$.
 
 \section{Examples and Applications}
 
-To evaluate the performance of the numerical methods, two types of problems were considered: a benchmark differential equation with a known analytical solution and the nonlinear SIR epidemic model. The benchmark problem allows the numerical error and convergence behaviour to be quantified, while the SIR model demonstrates the application of the methods to a realistic coupled nonlinear system.
+The numerical methods are evaluated using two test cases: a benchmark problem with known analytical solution for verification, and the SIR model to assess performance on a nonlinear coupled system.
 
 \subsection{Benchmark Problem}
 
@@ -609,72 +513,65 @@ The benchmark problem considered is
 \[
 \frac{dy}{dt} = -2y, \quad y(0)=1,
 \]
-which has the exact solution
+with exact solution
 \[
 y(t)=e^{-2t}.
 \]
 
-This problem is particularly useful because the exact solution is known, allowing direct comparison with the numerical approximations. Euler’s method, RK2, and RK4 were applied over the interval $[0,2]$ using a range of step sizes.
-
-To assess accuracy, the maximum global error was computed as
+Euler, RK2, and RK4 were applied over $[0,2]$ using varying step sizes. The maximum global error was computed as
 \[
-E_h = \max_{t_n} \left| y_{\text{exact}}(t_n) - y_n \right|.
+E_h = \max_{t_n} \left| y_{\text{exact}}(t_n) - y_n \right|,
 \]
-
-The observed order of convergence was estimated using
+and the observed order estimated using
 \[
 p \approx \frac{\log(E_h/E_{h/2})}{\log 2}.
 \]
 
-Figure~\ref{fig:comparison} compares the numerical and exact solutions for a representative step size. Euler’s method shows the largest deviation from the exact solution due to its first-order accuracy. RK2 provides a noticeable improvement by incorporating additional slope information, while RK4 produces results that are almost indistinguishable from the exact solution.
+Figure~\ref{fig:comparison} shows that Euler deviates most from the exact solution, RK2 improves accuracy, and RK4 closely matches the analytical solution.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{comparison_plot.png}
-\caption{Comparison of Euler, RK2, and RK4 solutions with the exact solution for the benchmark problem $y'=-2y$.}
+\caption{Comparison of numerical and exact solutions showing increasing accuracy from Euler to RK4, with RK4 closely matching the analytical solution.}
 \label{fig:comparison}
 \end{figure}
 
-Figure~\ref{fig:convergence} shows the convergence behaviour of the three methods on a log--log scale. The slopes of the curves clearly match the theoretical error orders derived earlier \cite{2}, with Euler exhibiting first-order convergence, RK2 exhibiting second-order convergence, and RK4 exhibiting fourth-order convergence. This agreement between observed and theoretical convergence rates provides strong verification of the correctness of the numerical implementations \cite{18}.
+Figure~\ref{fig:convergence} shows convergence on a log--log scale, with slopes matching the theoretical orders \cite{2}: first-order for Euler, second-order for RK2, and fourth-order for RK4 \cite{18}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{convergence_plot.png}
-\caption{Log--log convergence plot showing the dependence of maximum global error on step size for Euler, RK2, and RK4.}
+\caption{Log--log convergence of numerical methods showing first-, second-, and fourth-order accuracy for Euler, RK2, and RK4 respectively, consistent with theoretical predictions.}
 \label{fig:convergence}
 \end{figure}
 
-These results confirm that higher-order methods provide significantly improved accuracy for a given step size. Euler’s method is simple and computationally efficient, but its first-order convergence means that the error decreases relatively slowly as the step size is refined. RK2 provides a clear improvement by reducing the global error quadratically with step size. RK4 performs best, with fourth-order convergence allowing very small errors to be achieved even for moderate step sizes. This demonstrates that a higher computational cost per step can be justified when it leads to substantially improved accuracy.
+These results confirm that higher-order methods achieve significantly greater accuracy for a given step size.
 
 \subsection{Computational Time Comparison}
 
-In addition to accuracy, the computational cost of each numerical method was assessed using the benchmark problem. The average runtime of Euler’s method, RK2, and RK4 was measured over repeated simulations using the same step size. The results are shown in Figure~7.
+Computational cost was evaluated using the benchmark problem. Figure~\ref{fig:timing_comparison} shows that Euler is fastest, followed by RK2 and RK4, reflecting the number of function evaluations per step.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.75\textwidth]{timing_comparison.png}
-\caption{Average computational time for Euler, RK2, and RK4 on the benchmark problem.}
+\caption{Computational time comparison showing increased cost with higher-order methods due to additional function evaluations per step.}
 \label{fig:timing_comparison}
 \end{figure}
 
-The timing results are consistent with the structure of the methods. Euler’s method is the fastest because it evaluates the derivative only once per step, while RK2 and RK4 require two and four evaluations respectively. This confirms the theoretical computational complexity discussed earlier, where all methods scale linearly with the number of time steps, but differ in the constant amount of work required per step.
-
-However, runtime alone does not provide a complete measure of efficiency. A method that is cheaper per step may still require many more steps to achieve the same level of accuracy. To account for this, the numerical error was also compared against the total number of function evaluations, as shown in Figure~8.
+However, runtime alone does not reflect efficiency. Figure~\ref{fig:error_fevals} compares error against total function evaluations, showing that RK4 achieves significantly lower error for a given computational effort, with RK2 also outperforming Euler.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.75\textwidth]{error_vs_function_evaluations.png}
-\caption{Maximum global error as a function of the number of function evaluations for Euler, RK2, and RK4.}
+\caption{Error versus function evaluations demonstrating superior efficiency of RK4, achieving lower error for comparable computational effort.}
 \label{fig:error_fevals}
 \end{figure}
 
-Figure~\ref{fig:error_fevals} provides a more meaningful comparison of overall efficiency because it relates accuracy directly to computational effort. Although RK4 performs the largest number of function evaluations per step, it achieves substantially smaller errors for a given computational cost. RK2 also outperforms Euler when accuracy is measured relative to the number of derivative evaluations. This shows that higher-order methods, while more expensive on a per-step basis, can be more efficient overall because they reduce the error much more rapidly.
-
-Taken together, Figures~7 and~8 highlight the trade-off between raw runtime and numerical efficiency. Euler’s method remains the cheapest method per step, but its low order of accuracy makes it inefficient when high precision is required. RK4 has the greatest per-step cost, yet its superior convergence behaviour allows it to achieve a much lower error for comparable computational effort. Therefore, the cheapest method per step is not necessarily the most effective method overall.
+Thus, although higher-order methods are more expensive per step, they are more efficient overall when accuracy is required.
 
 \subsection{SIR Model Simulation}
 
-The SIR model was solved numerically using the RK4 method with parameters
+The SIR model was solved using RK4 with
 \[
 \beta = 0.35, \qquad \gamma = 0.10,
 \]
@@ -683,25 +580,22 @@ and initial conditions
 S_0 = 0.95, \qquad I_0 = 0.05, \qquad R_0 = 0.
 \]
 
-The simulation was performed over the interval $[0,160]$ with step size $h=0.5$. The resulting compartment histories are shown in Figure~\ref{fig:sir-rk4}.
+The simulation was performed over $[0,160]$ with $h=0.5$ (Figure~\ref{fig:sir-rk4}). The infected population peaks before declining, while the recovered population increases monotonically.
 
-Initially, the infected population increases rapidly as the disease spreads through the susceptible population. As the number of susceptible individuals decreases and recovery becomes dominant, the infected population reaches a peak before declining. Meanwhile, the recovered population increases monotonically and the susceptible population decreases continuously.
-
-The numerical results indicate that the infected population reaches a maximum of approximately $I_{\max} \approx 0.36$ at around $t \approx 25$. This behaviour is consistent with the theoretical expectation, since the basic reproduction number is
+The peak infection is approximately $I_{\max} \approx 0.36$ at $t \approx 25$, consistent with
 \[
 R_0 = \frac{\beta}{\gamma} = 3.5 > 1,
 \]
-indicating that the infection spreads through the population before eventually declining.
+indicating initial growth of the epidemic \cite{7,15}.
 
 \begin{figure}[H]
 \centering
 \includegraphics[width=0.85\textwidth]{sir_rk4.png}
-\caption{Time evolution of the susceptible, infected, and recovered populations obtained using the RK4 method.}
+\caption{SIR model simulation showing infection peak and recovery dynamics, with smooth behaviour indicating stable numerical integration.}
 \label{fig:sir-rk4}
 \end{figure}
 
-The smooth behaviour of the numerical solution and the absence of non-physical oscillations indicate that the chosen step size is sufficiently small for RK4 to capture the epidemic dynamics reliably.
-This behaviour reflects the depletion of the susceptible population, which reduces the effective reproduction number over time until the infection can no longer sustain itself.
+The smooth behaviour and absence of non-physical oscillations indicate that RK4 captures the dynamics reliably.
 
 \subsection{Validation of the Numerical Solution}
 
@@ -710,22 +604,20 @@ An important property of the SIR model is conservation of total population:
 S(t) + I(t) + R(t) = 1.
 \]
 
-The numerical solution satisfied this condition with a maximum deviation of less than $10^{-12}$, indicating excellent numerical stability and negligible accumulated error. This provides strong validation of both the implementation and the suitability of RK4 for this nonlinear system \cite{6}.
+The solution satisfied this condition with deviation less than $10^{-12}$, confirming numerical stability and correctness \cite{6}.
 
 \subsection{Overall Comparison}
-
-The benchmark and SIR results together demonstrate the trade-off between computational cost and accuracy. Euler’s method is simple and fast but relatively inaccurate. RK2 improves the approximation significantly with a moderate increase in computational cost. RK4 is the most computationally expensive per step, but its superior convergence behaviour and stability make it the most effective method overall.
-
-For nonlinear systems such as the SIR model, where errors can propagate through coupled variables, the improved robustness of higher-order methods becomes particularly important.
+The results demonstrate the trade-off between computational cost and accuracy, with RK4 providing the highest accuracy and stability.
+For nonlinear systems such as the SIR model, the improved robustness of higher-order methods makes RK4 the most effective method overall \cite{19}.
+Additional simulations with varying initial conditions and reproduction numbers (see Appendix) further confirmed sensitivity to model parameters and robustness of RK4.
 
 \section{Conclusion}
 
-This report investigated the performance of Euler’s method, RK2, and RK4 for solving ordinary differential equations. Using a benchmark problem with known analytical solution, the expected convergence rates were confirmed and the trade-off between computational efficiency and numerical accuracy was demonstrated. Euler’s method was found to be the least accurate, RK2 provided a substantial improvement, and RK4 delivered the highest accuracy together with strong stability characteristics.
+This report evaluated Euler, RK2, and RK4 methods for solving ODEs. The benchmark confirmed theoretical convergence, while the SIR model demonstrated performance on a nonlinear system. RK4 provided the best balance between accuracy, stability, and computational efficiency, making it the preferred method for nonlinear problems of this type \cite{1}.
 
-The methods were then applied to the nonlinear SIR epidemic model, where RK4 produced accurate, stable, and physically consistent solutions while preserving the total population. Overall, the results show that although higher-order methods require more work per time step, their improved convergence behaviour makes them more effective for solving nonlinear dynamical systems. This highlights the importance of selecting a numerical method based not only on implementation simplicity, but also on the accuracy and reliability required by the problem. Among the methods considered, RK4 provides the best balance between accuracy, stability, and computational efficiency \cite{1} for the problems studied.
 \section{Extensions}
 
-Further work could include the implementation of adaptive step-size methods, comparison with implicit schemes for stiff systems, and exploration of more advanced epidemiological models such as SEIR or age-structured population models. Adaptive methods, including embedded Runge--Kutta schemes, allow step sizes to vary dynamically based on estimated error, improving efficiency \cite{16}. Additionally, numerical methods for chaotic systems and nonlinear dynamics present further challenges and opportunities for analysis \cite{17}. These extensions would provide deeper insight into the role of numerical methods in modelling increasingly realistic and complex dynamical systems.
+Further work could include adaptive step-size methods, comparison with implicit schemes for stiff systems, and exploration of more advanced epidemiological models such as SEIR or age-structured population models. Adaptive Runge--Kutta schemes can improve efficiency by varying step size according to estimated error \cite{16}, while nonlinear and chaotic systems present further numerical challenges \cite{17}.
 
 \section{Bibliography}
 
