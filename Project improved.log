@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.24)  11 APR 2026 22:52
+This is pdfTeX, Version 3.141592653-2.6-1.40.29 (TeX Live 2026) (preloaded format=pdflatex 2026.3.24)  11 APR 2026 23:29
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -433,48 +433,46 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Live
 \tf@toc=\write4
 \openout4 = `"Project improved.toc"'.
 
- [3] [4] [5] [6] [7{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [8] [9] [10] [11]
-<comparison_plot.png, id=54, 602.25pt x 401.5pt>
+ [3] [4] [5] [6] [7{/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc}] [8] [9] [10] [11] [12]
+<comparison_plot.png, id=57, 602.25pt x 401.5pt>
 File: comparison_plot.png Graphic file (type png)
 <use comparison_plot.png>
-Package pdftex.def Info: comparison_plot.png  used on input line 534.
-(pdftex.def)             Requested size: 399.29463pt x 266.20383pt.
- [12]
+Package pdftex.def Info: comparison_plot.png  used on input line 529.
+(pdftex.def)             Requested size: 300.64291pt x 200.43706pt.
 <convergence_plot.png, id=58, 602.25pt x 401.5pt>
 File: convergence_plot.png Graphic file (type png)
 <use convergence_plot.png>
-Package pdftex.def Info: convergence_plot.png  used on input line 543.
-(pdftex.def)             Requested size: 399.29463pt x 266.20383pt.
- [13 <./comparison_plot.png>]
+Package pdftex.def Info: convergence_plot.png  used on input line 536.
+(pdftex.def)             Requested size: 300.64291pt x 200.43706pt.
+ [13 <./comparison_plot.png> <./convergence_plot.png>]
 <timing_comparison.png, id=63, 602.25pt x 401.5pt>
 File: timing_comparison.png Graphic file (type png)
 <use timing_comparison.png>
-Package pdftex.def Info: timing_comparison.png  used on input line 556.
-(pdftex.def)             Requested size: 352.31625pt x 234.88573pt.
- [14 <./convergence_plot.png>]
-<error_vs_function_evaluations.png, id=67, 602.25pt x 401.5pt>
+Package pdftex.def Info: timing_comparison.png  used on input line 545.
+(pdftex.def)             Requested size: 291.2458pt x 194.16975pt.
+<error_vs_function_evaluations.png, id=64, 602.25pt x 401.5pt>
 File: error_vs_function_evaluations.png Graphic file (type png)
 <use error_vs_function_evaluations.png>
-Package pdftex.def Info: error_vs_function_evaluations.png  used on input line 565.
-(pdftex.def)             Requested size: 352.31625pt x 234.88573pt.
- [15 <./timing_comparison.png> <./error_vs_function_evaluations.png>]
-<sir_rk4.png, id=71, 602.25pt x 401.5pt>
+Package pdftex.def Info: error_vs_function_evaluations.png  used on input line 552.
+(pdftex.def)             Requested size: 291.2458pt x 194.16975pt.
+ [14 <./timing_comparison.png> <./error_vs_function_evaluations.png>]
+<sir_rk4.png, id=68, 602.25pt x 401.5pt>
 File: sir_rk4.png Graphic file (type png)
 <use sir_rk4.png>
-Package pdftex.def Info: sir_rk4.png  used on input line 593.
-(pdftex.def)             Requested size: 399.29463pt x 266.20383pt.
- [16 <./sir_rk4.png>] [17] [18] [19]
+Package pdftex.def Info: sir_rk4.png  used on input line 579.
+(pdftex.def)             Requested size: 328.82707pt x 219.22668pt.
+ [15 <./sir_rk4.png>] [16] [17] [18] [19]
 <sir_initial_conditions.png, id=87, 602.25pt x 401.5pt>
 File: sir_initial_conditions.png Graphic file (type png)
 <use sir_initial_conditions.png>
-Package pdftex.def Info: sir_initial_conditions.png  used on input line 856.
+Package pdftex.def Info: sir_initial_conditions.png  used on input line 853.
 (pdftex.def)             Requested size: 399.29463pt x 266.20383pt.
 <sir_R0_comparison.png, id=88, 602.25pt x 401.5pt>
 File: sir_R0_comparison.png Graphic file (type png)
 <use sir_R0_comparison.png>
-Package pdftex.def Info: sir_R0_comparison.png  used on input line 867.
+Package pdftex.def Info: sir_R0_comparison.png  used on input line 864.
 (pdftex.def)             Requested size: 399.29463pt x 266.20383pt.
- [20 <./sir_initial_conditions.png>] [21 <./sir_R0_comparison.png>] [22] (./Project improved.aux)
+ [20 <./sir_initial_conditions.png>] [21 <./sir_R0_comparison.png>] (./Project improved.aux)
  ***********
 LaTeX2e <2025-11-01>
 L3 programming layer <2026-01-19>
@@ -483,16 +481,16 @@ L3 programming layer <2026-01-19>
 Here is how much of TeX's memory you used:
  14545 strings out of 467525
  301079 string characters out of 5418982
- 711232 words of memory out of 5000000
+ 700338 words of memory out of 5000000
  43217 multiletter control sequences out of 15000+600000
  634572 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,10n,104p,1052b,755s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 84i,10n,104p,1054b,755s stack positions out of 10000i,1000n,20000p,200000b,200000s
 </usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi5.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr5.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/2026/texmf-dist/fonts/type1/public/cm-super/sfrm1000.pfb>
-Output written on "Project improved.pdf" (22 pages, 432995 bytes).
+Output written on "Project improved.pdf" (21 pages, 433594 bytes).
 PDF statistics:
- 167 PDF objects out of 1000 (max. 8388607)
- 102 compressed objects within 2 object streams
+ 163 PDF objects out of 1000 (max. 8388607)
+ 100 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  48 words of extra memory for PDF output out of 10000 (max. 10000000)
 

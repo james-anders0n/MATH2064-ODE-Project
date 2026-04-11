@@ -44,48 +44,54 @@
 \@writefile{toc}{\contentsline {section}{\numberline {4}Numerical Methods}{8}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.1}Euler Method Implementation}{8}{}\protected@file@percent }
 \citation{2}
-\citation{1}
 \@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces General flowchart for the Euler algorithm.}}{9}{}\protected@file@percent }
 \newlabel{fig:euler-general}{{1}{9}{}{figure.1}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.2}Second-Order Runge--Kutta Method (RK2)}{9}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Error Analysis of RK2}{9}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Fourth-Order Runge--Kutta Method (RK4)}{9}{}\protected@file@percent }
+\citation{1}
 \citation{10}
 \@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces General flowchart for the RK2 algorithm.}}{10}{}\protected@file@percent }
 \newlabel{fig:rk2-general}{{2}{10}{}{figure.2}{}}
-\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}Error Analysis of RK4}{10}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Algorithm General and Sample Flowcharts}{10}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.2.1}Error Analysis of RK2}{10}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.3}Fourth-Order Runge--Kutta Method (RK4)}{10}{}\protected@file@percent }
 \@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces General flowchart for the RK4 algorithm.}}{11}{}\protected@file@percent }
 \newlabel{fig:rk4-general}{{3}{11}{}{figure.3}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Worked flowchart examples for RK2 and RK4 methods.}}{11}{}\protected@file@percent }
-\newlabel{fig:worked-examples}{{4}{11}{}{figure.4}{}}
+\@writefile{toc}{\contentsline {subsubsection}{\numberline {4.3.1}Error Analysis of RK4}{11}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {4.4}Algorithm General and Sample Flowcharts}{11}{}\protected@file@percent }
 \citation{5}
 \citation{20}
+\@writefile{lof}{\contentsline {figure}{\numberline {4}{\ignorespaces Worked flowchart examples for RK2 and RK4 methods.}}{12}{}\protected@file@percent }
+\newlabel{fig:worked-examples}{{4}{12}{}{figure.4}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {4.5}Implementation Summary}{12}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {5}Examples and Applications}{12}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Benchmark Problem}{12}{}\protected@file@percent }
 \citation{2}
 \citation{18}
-\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Comparison of numerical and exact solutions showing increasing accuracy from Euler to RK4, with RK4 closely matching the analytical solution.}}{13}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {5}{\ignorespaces Numerical solutions of the benchmark ODE compared with the analytical solution over $[0,2]$, showing increasing accuracy from Euler to RK4.}}{13}{}\protected@file@percent }
 \newlabel{fig:comparison}{{5}{13}{}{figure.5}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Log--log convergence of numerical methods showing first-, second-, and fourth-order accuracy for Euler, RK2, and RK4 respectively, consistent with theoretical predictions.}}{14}{}\protected@file@percent }
-\newlabel{fig:convergence}{{6}{14}{}{figure.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {6}{\ignorespaces Log--log plot of maximum global error against step size, showing slopes corresponding to first-, second-, and fourth-order convergence for Euler, RK2, and RK4.}}{13}{}\protected@file@percent }
+\newlabel{fig:convergence}{{6}{13}{}{figure.6}{}}
 \@writefile{toc}{\contentsline {subsection}{\numberline {5.2}Computational Time Comparison}{14}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Computational time comparison showing increased cost with higher-order methods due to additional function evaluations per step.}}{15}{}\protected@file@percent }
-\newlabel{fig:timing_comparison}{{7}{15}{}{figure.7}{}}
-\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Error versus function evaluations demonstrating superior efficiency of RK4, achieving lower error for comparable computational effort.}}{15}{}\protected@file@percent }
-\newlabel{fig:error_fevals}{{8}{15}{}{figure.8}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {7}{\ignorespaces Execution time of Euler, RK2, and RK4 methods for the benchmark problem, illustrating increased computational cost with additional function evaluations per step.}}{14}{}\protected@file@percent }
+\newlabel{fig:timing_comparison}{{7}{14}{}{figure.7}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {8}{\ignorespaces Maximum global error as a function of total function evaluations, demonstrating the improved efficiency of higher-order methods.}}{14}{}\protected@file@percent }
+\newlabel{fig:error_fevals}{{8}{14}{}{figure.8}{}}
 \citation{7}
 \citation{15}
 \citation{6}
 \citation{19}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}SIR Model Simulation}{16}{}\protected@file@percent }
-\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces SIR model simulation showing infection peak and recovery dynamics, with smooth behaviour indicating stable numerical integration.}}{16}{}\protected@file@percent }
-\newlabel{fig:sir-rk4}{{9}{16}{}{figure.9}{}}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Validation of the Numerical Solution}{16}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.3}SIR Model Simulation}{15}{}\protected@file@percent }
+\@writefile{lof}{\contentsline {figure}{\numberline {9}{\ignorespaces Time evolution of susceptible, infected, and recovered populations computed using RK4, showing epidemic growth, peak infection, and recovery dynamics.}}{15}{}\protected@file@percent }
+\newlabel{fig:sir-rk4}{{9}{15}{}{figure.9}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.4}Validation of the Numerical Solution}{15}{}\protected@file@percent }
 \citation{1}
 \citation{16}
-\citation{17}
+\citation{5}
+\citation{9}
+\citation{14}
+\citation{15}
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Overall Comparison}{16}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{16}{}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {7}Extensions}{16}{}\protected@file@percent }
 \bibcite{1}{1}
 \bibcite{2}{2}
 \bibcite{3}{3}
@@ -102,14 +108,11 @@
 \bibcite{14}{14}
 \bibcite{15}{15}
 \bibcite{16}{16}
-\@writefile{toc}{\contentsline {subsection}{\numberline {5.5}Overall Comparison}{17}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {6}Conclusion}{17}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {7}Extensions}{17}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {section}{\numberline {8}Bibliography}{17}{}\protected@file@percent }
 \bibcite{17}{17}
 \bibcite{18}{18}
 \bibcite{19}{19}
 \bibcite{20}{20}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Bibliography}{17}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {section}{\numberline {9}Appendix}{18}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {9.1}Benchmark Julia Code}{18}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {9.2}Observed Convergence Behaviour}{19}{}\protected@file@percent }
@@ -127,5 +130,4 @@
 \@writefile{toc}{\contentsline {subsubsection}{\numberline {9.7.3}Numerical Observations}{21}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {9.8}Validation of Conservation Law}{21}{}\protected@file@percent }
 \@writefile{toc}{\contentsline {subsection}{\numberline {9.9}Implementation Considerations}{21}{}\protected@file@percent }
-\@writefile{toc}{\contentsline {subsection}{\numberline {9.10}Appendix Summary}{22}{}\protected@file@percent }
-\gdef \@abspage@last{22}
+\gdef \@abspage@last{21}

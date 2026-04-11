@@ -10,8 +10,8 @@
 \usepackage{booktabs}
 \usepackage{graphicx}
 
-\setlength{\textfloatsep}{10pt}
-\setlength{\floatsep}{10pt}
+\setlength{\textfloatsep}{8pt}
+\setlength{\floatsep}{8pt}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0.4em}
 
@@ -53,7 +53,7 @@
 
 Ordinary Differential Equations (ODEs) are used to model dynamic processes in many disciplines, including engineering, physics, and biology. In epidemiology, systems of ODEs are commonly employed to simulate the spread of infectious diseases within a population. However, many realistic models are nonlinear and do not admit simple analytical solutions, making numerical methods essential for approximating their behaviour. Among the most widely used approaches are the Runge--Kutta (RK) methods, which offer improved accuracy compared to simpler methods such as Euler’s method.
 
-This paper investigates the performance of several numerical methods for solving ordinary differential equations, with a particular focus on the Euler method, the second-order Runge--Kutta method (RK2), and the fourth-order Runge--Kutta method (RK4). The methods are first applied to a simple ODE with a known analytical solution to evaluate convergence behaviour and global error as a function of step size. They are then applied to the nonlinear Susceptible--Infected--Recovered (SIR) epidemic model to simulate the spread of disease within a population. The numerical solutions are evaluated in terms of accuracy, stability, and computational efficiency, providing insight into the relative performance of each method when modelling complex real-world systems. The results highlight the trade-off between numerical accuracy and computational cost, illustrating the advantages of higher-order Runge--Kutta methods for modelling nonlinear dynamical systems.
+This paper investigates the performance of several numerical methods for solving ordinary differential equations, with a particular focus on the Euler method, the second-order Runge--Kutta method (RK2), and the fourth-order Runge--Kutta method (RK4). The methods are first applied to a simple ODE with a known analytical solution to evaluate convergence behaviour and global error as a function of step size. They are then applied to the nonlinear Susceptible--Infected--Recovered (SIR) epidemic model to simulate the spread of disease within a population. The numerical solutions are evaluated in terms of accuracy, stability, and computational efficiency, providing insight into the relative performance of each method when modelling complex real-world systems. The results demonstrate the trade-off between numerical accuracy and computational cost, illustrating the advantages of higher-order Runge--Kutta methods for modelling nonlinear dynamical systems.
 
 \section{Introduction}
 
@@ -269,7 +269,7 @@ y_{n+1} = y_n + h f(t_n, y_n).
 
 The derivative is evaluated once per step, making Euler’s method inexpensive but sensitive to step size \cite{3}.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}[node distance=1.1cm, scale=0.7, every node/.style={scale=0.7}]
 
@@ -316,9 +316,9 @@ The solution is advanced using
 y_{n+1} = y_n + \frac{h}{2}(k_1 + k_2).
 \end{equation}
 
-This improves the approximation of the average slope over the interval.
+This improves the approximation of the solution by accounting for variation in the slope over the interval.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}[node distance=1.1cm, scale=0.7, every node/.style={scale=0.7}]
 
@@ -377,7 +377,7 @@ y_{n+1} = y_n + \frac{h}{6}\left(k_1 + 2k_2 + 2k_3 + k_4\right).
 
 By sampling the slope at multiple points, RK4 captures variation within the step much more effectively \cite{10}.
 
-\begin{figure}[htbp]
+\begin{figure}[H]
 \centering
 \begin{tikzpicture}[node distance=1.15cm, scale=0.7, every node/.style={scale=0.7}]
 
@@ -481,7 +481,7 @@ with step size $h=0.1$. These examples complement the general flowcharts present
 \label{fig:worked-examples}
 \end{figure}
 
-The worked examples illustrate the update structure and improved accuracy of RK4.
+The worked examples illustrate the update structure and demonstrate the improved accuracy of RK4 relative to lower-order methods.
 
 \FloatBarrier
 
@@ -504,11 +504,8 @@ Thus, all methods have computational complexity $\mathcal{O}(N)$, but with diffe
 For the SIR system, updates are applied component-wise to $\mathbf{y} = [S, I, R]^T$.
 
 \section{Examples and Applications}
-
 The numerical methods are evaluated using two test cases: a benchmark problem with known analytical solution for verification, and the SIR model to assess performance on a nonlinear coupled system.
-
 \subsection{Benchmark Problem}
-
 The benchmark problem considered is
 \[
 \frac{dy}{dt} = -2y, \quad y(0)=1,
@@ -517,7 +514,6 @@ with exact solution
 \[
 y(t)=e^{-2t}.
 \]
-
 Euler, RK2, and RK4 were applied over $[0,2]$ using varying step sizes. The maximum global error was computed as
 \[
 E_h = \max_{t_n} \left| y_{\text{exact}}(t_n) - y_n \right|,
@@ -526,47 +522,37 @@ and the observed order estimated using
 \[
 p \approx \frac{\log(E_h/E_{h/2})}{\log 2}.
 \]
-
 Figure~\ref{fig:comparison} shows that Euler deviates most from the exact solution, RK2 improves accuracy, and RK4 closely matches the analytical solution.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{comparison_plot.png}
-\caption{Comparison of numerical and exact solutions showing increasing accuracy from Euler to RK4, with RK4 closely matching the analytical solution.}
+\includegraphics[width=0.64\textwidth]{comparison_plot.png}
+\caption{Numerical solutions of the benchmark ODE compared with the analytical solution over $[0,2]$, showing increasing accuracy from Euler to RK4.}
 \label{fig:comparison}
 \end{figure}
-
 Figure~\ref{fig:convergence} shows convergence on a log--log scale, with slopes matching the theoretical orders \cite{2}: first-order for Euler, second-order for RK2, and fourth-order for RK4 \cite{18}.
-
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{convergence_plot.png}
-\caption{Log--log convergence of numerical methods showing first-, second-, and fourth-order accuracy for Euler, RK2, and RK4 respectively, consistent with theoretical predictions.}
+\includegraphics[width=0.64\textwidth]{convergence_plot.png}
+\caption{Log--log plot of maximum global error against step size, showing slopes corresponding to first-, second-, and fourth-order convergence for Euler, RK2, and RK4.}
 \label{fig:convergence}
 \end{figure}
-
 These results confirm that higher-order methods achieve significantly greater accuracy for a given step size.
-
 \subsection{Computational Time Comparison}
-
 Computational cost was evaluated using the benchmark problem. Figure~\ref{fig:timing_comparison} shows that Euler is fastest, followed by RK2 and RK4, reflecting the number of function evaluations per step.
-
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.75\textwidth]{timing_comparison.png}
-\caption{Computational time comparison showing increased cost with higher-order methods due to additional function evaluations per step.}
+\includegraphics[width=0.62\textwidth]{timing_comparison.png}
+\caption{Execution time of Euler, RK2, and RK4 methods for the benchmark problem, illustrating increased computational cost with additional function evaluations per step.}
 \label{fig:timing_comparison}
 \end{figure}
-
 However, runtime alone does not reflect efficiency. Figure~\ref{fig:error_fevals} compares error against total function evaluations, showing that RK4 achieves significantly lower error for a given computational effort, with RK2 also outperforming Euler.
-
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.75\textwidth]{error_vs_function_evaluations.png}
-\caption{Error versus function evaluations demonstrating superior efficiency of RK4, achieving lower error for comparable computational effort.}
+\includegraphics[width=0.62\textwidth]{error_vs_function_evaluations.png}
+\caption{Maximum global error as a function of total function evaluations, demonstrating the improved efficiency of higher-order methods.}
 \label{fig:error_fevals}
 \end{figure}
-
 Thus, although higher-order methods are more expensive per step, they are more efficient overall when accuracy is required.
 
 \subsection{SIR Model Simulation}
@@ -590,8 +576,8 @@ indicating initial growth of the epidemic \cite{7,15}.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.85\textwidth]{sir_rk4.png}
-\caption{SIR model simulation showing infection peak and recovery dynamics, with smooth behaviour indicating stable numerical integration.}
+\includegraphics[width=0.70\textwidth]{sir_rk4.png}
+\caption{Time evolution of susceptible, infected, and recovered populations computed using RK4, showing epidemic growth, peak infection, and recovery dynamics.}
 \label{fig:sir-rk4}
 \end{figure}
 
@@ -613,11 +599,21 @@ Additional simulations with varying initial conditions and reproduction numbers 
 
 \section{Conclusion}
 
-This report evaluated Euler, RK2, and RK4 methods for solving ODEs. The benchmark confirmed theoretical convergence, while the SIR model demonstrated performance on a nonlinear system. RK4 provided the best balance between accuracy, stability, and computational efficiency, making it the preferred method for nonlinear problems of this type \cite{1}.
+This report evaluated Euler, RK2, and RK4 methods for solving ordinary differential equations. The benchmark problem confirmed theoretical convergence behaviour, while the SIR model demonstrated performance on a nonlinear coupled system.
+
+Overall, RK4 provided the best balance between accuracy, stability, and computational efficiency. Although it requires more function evaluations per step, its higher-order accuracy allows larger step sizes to be used while maintaining low error, making it the most effective method for nonlinear problems of this type \cite{1}. These results highlight the importance of selecting numerical methods based on both problem characteristics and accuracy requirements.
 
 \section{Extensions}
 
-Further work could include adaptive step-size methods, comparison with implicit schemes for stiff systems, and exploration of more advanced epidemiological models such as SEIR or age-structured population models. Adaptive Runge--Kutta schemes can improve efficiency by varying step size according to estimated error \cite{16}, while nonlinear and chaotic systems present further numerical challenges \cite{17}.
+Further work could extend both the numerical methodology and the modelling framework considered in this report. One important direction is the use of adaptive step-size methods, where the time step $h$ is adjusted dynamically based on an estimate of the local truncation error. Adaptive Runge--Kutta schemes, such as embedded RK methods, can significantly improve computational efficiency by using larger step sizes in smooth regions and smaller step sizes where the solution varies rapidly \cite{16}.
+
+Another extension involves the treatment of stiff systems, where explicit methods such as Euler and RK4 may become unstable unless extremely small step sizes are used. In such cases, implicit methods or semi-implicit schemes provide improved stability properties and are widely used in engineering and biological applications \cite{5,9}.
+
+From a modelling perspective, the SIR model can be extended to more realistic epidemiological frameworks, such as the SEIR model, which introduces an exposed (latent) population, or age-structured and spatially distributed models. These extensions allow for more accurate representation of real-world disease dynamics, including incubation periods and heterogeneous mixing patterns \cite{14,15}.
+
+Finally, further investigation could explore sensitivity analysis and parameter estimation, particularly for the transmission and recovery rates. This would provide deeper insight into how uncertainties in model parameters influence the predicted dynamics and could improve the reliability of numerical simulations in practical applications.
+
+\newpage{}
 
 \section{Bibliography}
 
@@ -724,6 +720,7 @@ G. Strang,
 Wellesley, 2016.
 
 \end{thebibliography}
+\newpage{}
 
 \section{Appendix}
 
@@ -797,7 +794,7 @@ Step size $h$ & Euler Error & RK2 Error & RK4 Error \\
 
 The reduction in error clearly follows the expected trends:
 \[
-E_h \propto h, \quad E_h \propto h^2, \quad E_h \propto h^4.
+E_h \propto h, \quad E_h \propto h^2, \quad E_h \propto h^4
 \]
 
 \subsection{Error Ratio Analysis}
@@ -894,14 +891,4 @@ was satisfied with deviations less than $10^{-12}$, confirming numerical correct
     \item Explicit time-stepping ensured clarity and control
     \item Consistent step sizes enabled fair comparison
 \end{itemize}
-
-\subsection{Appendix Summary}
-
-\begin{itemize}
-    \item Numerical methods were correctly implemented and verified
-    \item Convergence behaviour matches theoretical predictions
-    \item RK4 provides superior accuracy and stability
-    \item SIR simulations confirm expected epidemiological behaviour
-\end{itemize}
-
 \end{document}
