@@ -1,6 +1,6 @@
 # Fdb version 4
-["pdflatex"] 1775915953.03743 "/Users/rileymarriott/Desktop/MATH2064-ODE-Project/Project improved.tex" "Project improved.pdf" "Project improved" 1775915954.01413 0
-  "/Users/rileymarriott/Desktop/MATH2064-ODE-Project/Project improved.tex" 1775915951.76561 37834 599cabd3d681d045f57fdce49d707fd1 ""
+["pdflatex"] 1775916072.06702 "/Users/rileymarriott/Desktop/MATH2064-ODE-Project/Project improved.tex" "Project improved.pdf" "Project improved" 1775916073.15364 0
+  "/Users/rileymarriott/Desktop/MATH2064-ODE-Project/Project improved.tex" 1775916071.91082 37861 17062ad263b03ccfa479f7ddbb31abc6 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc" 1136849721 2900 1537cc8184ad1792082cd229ecc269f4 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/local/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm" 1136768653 1536 e07581a4bb3136ece9eeb4c3ffab8233 ""
@@ -135,9 +135,9 @@
   "/usr/local/texlive/2026/texmf-var/fonts/map/pdftex/updmap/pdftex.map" 1774341836 5541377 04880c840ca220163a28f1a3af0ee662 ""
   "/usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt" 1774341698 3636762 65357dba612598c718d6f225e3f5d403 ""
   "/usr/local/texlive/2026/texmf.cnf" 1772409725 577 648cd9f92f9c0eac486f4c71c85cfbbe ""
-  "Project improved.aux" 1775915953.94666 9057 d49c8b78d50c93d57cafe3ff8390b189 "pdflatex"
-  "Project improved.tex" 1775915951.76561 37834 599cabd3d681d045f57fdce49d707fd1 ""
-  "Project improved.toc" 1775915953.94785 3538 db57865e151a2858c6fbcc5ceba0b361 "pdflatex"
+  "Project improved.aux" 1775916073.07755 9057 d49c8b78d50c93d57cafe3ff8390b189 "pdflatex"
+  "Project improved.tex" 1775916071.91082 37861 17062ad263b03ccfa479f7ddbb31abc6 ""
+  "Project improved.toc" 1775916073.07871 3538 db57865e151a2858c6fbcc5ceba0b361 "pdflatex"
   "comparison_plot.png" 1775542164.9076 39383 600f3ff61d9e7b4ff6a0676944618590 ""
   "convergence_plot.png" 1775542165.07175 30842 a686b583a07aa87a7207c984cc013aba ""
   "error_vs_function_evaluations.png" 1775542166.55813 35390 0babcbc8ac5425abdd6f57e6ae738175 ""
