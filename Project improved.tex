@@ -39,7 +39,6 @@
 
 \title{Numerical solution of the SIR epidemic model using Euler and Runge--Kutta Methods}
 \author{Riley Marriott, James Anderson, James Gregory, Andre Ristovsky}
-\date{March 2026}
 
 \begin{document}
 
@@ -514,7 +513,7 @@ with exact solution
 \[
 y(t)=e^{-2t}.
 \]
-Euler, RK2, and RK4 were applied over $[0,2]$ using varying step sizes. The maximum global error was computed as
+Euler, RK2, and RK4 were applied over $[0,2]$ using varying step sizes. The maximum global error was
 \[
 E_h = \max_{t_n} \left| y_{\text{exact}}(t_n) - y_n \right|,
 \]
@@ -526,14 +525,14 @@ Figure~\ref{fig:comparison} shows that Euler deviates most from the exact soluti
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.64\textwidth]{comparison_plot.png}
+\includegraphics[width=0.60\textwidth]{comparison_plot.png}
 \caption{Numerical solutions of the benchmark ODE compared with the analytical solution over $[0,2]$, showing increasing accuracy from Euler to RK4.}
 \label{fig:comparison}
 \end{figure}
 Figure~\ref{fig:convergence} shows convergence on a log--log scale, with slopes matching the theoretical orders \cite{2}: first-order for Euler, second-order for RK2, and fourth-order for RK4 \cite{18}.
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.64\textwidth]{convergence_plot.png}
+\includegraphics[width=0.60\textwidth]{convergence_plot.png}
 \caption{Log--log plot of maximum global error against step size, showing slopes corresponding to first-, second-, and fourth-order convergence for Euler, RK2, and RK4.}
 \label{fig:convergence}
 \end{figure}
