@@ -50,16 +50,14 @@
 
 \section{Abstract}
 
-Ordinary Differential Equations (ODEs) are used to model dynamic processes in many disciplines, including engineering, physics, and biology. In epidemiology, systems of ODEs are commonly employed to simulate the spread of infectious diseases within a population. However, many realistic models are nonlinear and do not admit simple analytical solutions, making numerical methods essential for approximating their behaviour. Among the most widely used approaches are the Runge--Kutta (RK) methods, which offer improved accuracy compared to simpler methods such as Euler’s method.
-
-This paper investigates the performance of several numerical methods for solving ordinary differential equations, with a particular focus on the Euler method, the second-order Runge--Kutta method (RK2), and the fourth-order Runge--Kutta method (RK4). The methods are first applied to a simple ODE with a known analytical solution to evaluate convergence behaviour and global error as a function of step size. They are then applied to the nonlinear Susceptible--Infected--Recovered (SIR) epidemic model to simulate the spread of disease within a population. The numerical solutions are evaluated in terms of accuracy, stability, and computational efficiency, providing insight into the relative performance of each method when modelling complex real-world systems. The results demonstrate the trade-off between numerical accuracy and computational cost, illustrating the advantages of higher-order Runge--Kutta methods for modelling nonlinear dynamical systems.
+Ordinary Differential Equations (ODEs) are used to model dynamic processes in many disciplines, including engineering, physics, and biology. In epidemiology, systems of ODEs are commonly used to simulate the spread of infectious diseases within a population. The Susceptible--Infected--Recovered (SIR) model is a fundamental example of this approach, as it describes how individuals move between disease states and allows infection dynamics such as outbreak growth, peak infection, and recovery to be studied. However, many realistic models are nonlinear and do not admit simple analytical solutions, making numerical methods essential for approximating their behaviour.
+This paper investigates the performance of several numerical methods for solving ordinary differential equations, with a particular focus on the Euler method, the second-order Runge--Kutta method (RK2), and the fourth-order Runge--Kutta method (RK4). The methods are first applied to a simple ODE with a known analytical solution to evaluate convergence behaviour and global error as a function of step size. They are then applied to the nonlinear SIR epidemic model to simulate disease spread in a closed population and assess how the methods perform on a coupled system of ODEs. The numerical solutions are evaluated in terms of accuracy, stability, and computational efficiency. The results demonstrate the trade-off between numerical accuracy and computational cost, illustrating the advantages of higher-order Runge--Kutta methods for modelling nonlinear dynamical systems.
 
 \section{Introduction}
 
-Ordinary Differential Equations (ODEs) describe systems in which variables evolve over time according to specified rates of change \cite{2,13}. They are fundamental in many disciplines, including engineering, physics, and biology, where they are used to model dynamic processes such as fluid flow, motion, population dynamics, and epidemiology.
-In many practical situations, ODE systems are nonlinear and coupled, so analytical solutions are often unavailable. Numerical methods are therefore required to approximate their behaviour by discretising time and computing solutions at discrete points \cite{1,3}.
-Within epidemiology, modelling the spread of infectious disease is an important dynamic problem. Mathematical compartment models such as SIR provide a useful framework for predicting outbreaks, estimating peak infection levels, and informing public health decisions \cite{8,14}.
-This report investigates Euler, RK2, and RK4 methods using a benchmark ODE and the nonlinear SIR model, comparing accuracy, stability, and computational efficiency \cite{4}.
+Ordinary Differential Equations (ODEs) describe systems in which variables evolve over time according to specified rates of change \cite{2,13}. They are fundamental in many disciplines, including engineering, physics, and biology, where they are used to model dynamic processes such as fluid flow, motion, and population dynamics. In many practical situations, particularly when ODE systems are nonlinear and coupled, analytical solutions are unavailable, and numerical methods are required to approximate their behaviour \cite{1,3}.
+A key application of such systems arises in epidemiology through compartmental models of infectious disease. The Susceptible--Infected--Recovered (SIR) model is a widely used framework that represents the spread of disease using a system of coupled nonlinear ODEs. It enables prediction of outbreak dynamics, including peak infection levels and long-term population behaviour, and is therefore an ideal case study for evaluating numerical methods.
+This report investigates the performance of Euler, RK2, and RK4 methods for solving ODEs, using both a benchmark problem with a known analytical solution and the nonlinear SIR model. The methods are compared in terms of accuracy, stability, and computational efficiency, providing insight into their suitability for solving real-world dynamical systems.
 
 \section{Theory}
 
@@ -106,6 +104,7 @@ for some $\xi \in [t_n, t_{n+1}]$, Euler’s method neglects higher-order terms.
 \subsection{Runge-Kutta Methods}
 
 Runge--Kutta methods improve accuracy by evaluating $f(t,y)$ at multiple points within each time step \cite{1}, providing higher-order approximations of the integral and improved stability properties \cite{9}.
+Unlike Euler’s method, which assumes the slope remains constant over the interval, Runge--Kutta methods account for how the slope changes within the step. By combining multiple slope evaluations, these methods capture the curvature of the solution more effectively, leading to improved accuracy. Higher-order methods, such as RK4, use weighted averages of these slopes to better match the behaviour of the exact solution over each time step.
 
 \subsubsection{Second-Order Runge--Kutta Method (RK2)}
 
@@ -500,7 +499,18 @@ The primary difference is the number of function evaluations per step:
 
 Thus, all methods have computational complexity $\mathcal{O}(N)$, but with different constant factors. Higher-order methods require more work per step, but typically achieve the same accuracy with fewer steps \cite{5,20}.
 
-For the SIR system, updates are applied component-wise to $\mathbf{y} = [S, I, R]^T$.
+For the SIR system, the unknown becomes a vector \( y = [S, I, R]^T \), and the governing equations define a system of coupled derivatives. The numerical methods are applied in the same way as for a single equation, but each slope evaluation now returns a vector of derivatives rather than a single value.
+
+For example, in Euler’s method, the update takes the form
+\[
+y_{n+1} = y_n + h f(t_n, y_n),
+\]
+where \( f(t_n, y_n) \) represents the vector of derivatives \( [dS/dt, dI/dt, dR/dt]^T \). This means that each component of \( y \) is updated simultaneously using its corresponding derivative.
+
+Similarly, in Runge--Kutta methods, each intermediate slope (e.g. \( k_1, k_2, k_3, k_4 \)) is computed as a vector of derivatives, and the same update structure is applied using these vector-valued slopes.
+
+This ensures that all variables are updated together at each step, preserving the coupling between susceptible, infected, and recovered populations and allowing the full system dynamics to be accurately approximated.
+\newpage{}
 
 \section{Examples and Applications}
 The numerical methods are evaluated using two test cases: a benchmark problem with known analytical solution for verification, and the SIR model to assess performance on a nonlinear coupled system.
@@ -521,7 +531,7 @@ and the observed order estimated using
 \[
 p \approx \frac{\log(E_h/E_{h/2})}{\log 2}.
 \]
-Figure~\ref{fig:comparison} shows that Euler deviates most from the exact solution, RK2 improves accuracy, and RK4 closely matches the analytical solution.
+Figure~\ref{fig:comparison} shows that Euler deviates most from the exact solution, RK2 improves accuracy, and RK4 closely matches the analytical solution. This demonstrates how higher-order methods better capture the curvature of the solution, reducing the accumulation of error over time.
 
 \begin{figure}[H]
 \centering
@@ -536,7 +546,7 @@ Figure~\ref{fig:convergence} shows convergence on a log--log scale, with slopes 
 \caption{Log--log plot of maximum global error against step size, showing slopes corresponding to first-, second-, and fourth-order convergence for Euler, RK2, and RK4.}
 \label{fig:convergence}
 \end{figure}
-These results confirm that higher-order methods achieve significantly greater accuracy for a given step size.
+These results confirm that higher-order methods achieve significantly greater accuracy for a given step size. In practical terms, RK4 can therefore use larger time steps than Euler while still maintaining a low error, making it more efficient when accuracy is important.
 \subsection{Computational Time Comparison}
 Computational cost was evaluated using the benchmark problem. Figure~\ref{fig:timing_comparison} shows that Euler is fastest, followed by RK2 and RK4, reflecting the number of function evaluations per step.
 \begin{figure}[H]
@@ -556,31 +566,35 @@ Thus, although higher-order methods are more expensive per step, they are more e
 
 \subsection{SIR Model Simulation}
 
-The SIR model was solved using RK4 with
+The SIR model was solved using Euler, RK2, and RK4 methods with
 \[
-\beta = 0.35, \qquad \gamma = 0.10,
+\beta = 0.35, \quad \gamma = 0.10,
 \]
 and initial conditions
 \[
-S_0 = 0.95, \qquad I_0 = 0.05, \qquad R_0 = 0.
+S_0 = 0.95, \quad I_0 = 0.05, \quad R_0 = 0.
 \]
 
-The simulation was performed over $[0,160]$ with $h=0.5$ (Figure~\ref{fig:sir-rk4}). The infected population peaks before declining, while the recovered population increases monotonically.
-
-The peak infection is approximately $I_{\max} \approx 0.36$ at $t \approx 25$, consistent with
-\[
-R_0 = \frac{\beta}{\gamma} = 3.5 > 1,
-\]
-indicating initial growth of the epidemic \cite{7,15}.
+All three methods were applied over the interval $[0,160]$ using a fixed step size of $h = 0.5$, allowing direct comparison of their performance on a nonlinear coupled system.
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.70\textwidth]{sir_rk4.png}
-\caption{Time evolution of susceptible, infected, and recovered populations computed using RK4, showing epidemic growth, peak infection, and recovery dynamics.}
-\label{fig:sir-rk4}
+\includegraphics[width=0.62\textwidth]{sir_comparison.png}
+\caption{Comparison of Euler, RK2, and RK4 methods for the SIR model, showing the infected population over time.}
 \end{figure}
 
-The smooth behaviour and absence of non-physical oscillations indicate that RK4 captures the dynamics reliably.
+Figure 9 shows the evolution of the infected population computed using each numerical method. Euler’s method produces a solution that is close to the higher-order methods for the chosen step size, although small differences are visible near the peak infection. These differences arise from its lower accuracy and sensitivity to step size, which become more pronounced for larger time steps or more rapidly varying systems.
+
+The RK2 method improves upon this behaviour, capturing the overall trend more accurately and reducing the error in peak prediction. RK2 provides results that closely align with RK4, improving accuracy relative to Euler while maintaining similar overall behaviour.
+
+In contrast, the RK4 method produces a smooth and stable solution that closely represents the expected dynamics of the system. The infected population increases rapidly, reaches a peak of approximately $I_{\max} \approx 0.36$ at $t \approx 25$, and then declines as the recovered population increases. This behaviour is consistent with the basic reproduction number
+\[
+R_0 = \frac{\beta}{\gamma} = 3.5 > 1,
+\]
+indicating initial growth of the epidemic.
+
+The simulation also shows that the SIR model is sensitive to its parameters and initial conditions. The transmission rate $\beta$ controls how quickly susceptible individuals become infected, while the recovery rate $\gamma$ controls how quickly infected individuals move into the recovered group. Increasing $\beta$ or decreasing $\gamma$ increases the basic reproduction number $R_0$, leading to a larger and faster outbreak. Similarly, changing the initial infected population affects how quickly the epidemic peak is reached.
+The comparison demonstrates that higher-order methods are more reliable for nonlinear systems such as the SIR model, where small numerical errors can significantly affect the dynamics. While Euler’s method is computationally inexpensive, its reduced accuracy limits its usefulness for such problems. RK2 provides a reasonable compromise, but RK4 offers the best overall performance in terms of accuracy and stability.
 
 \subsection{Validation of the Numerical Solution}
 
@@ -592,10 +606,10 @@ S(t) + I(t) + R(t) = 1.
 The solution satisfied this condition with deviation less than $10^{-12}$, confirming numerical stability and correctness \cite{6}.
 
 \subsection{Overall Comparison}
-The results demonstrate the trade-off between computational cost and accuracy, with RK4 providing the highest accuracy and stability.
+The results demonstrate the trade-off between computational cost and accuracy, with RK4 generally providing the highest accuracy and stability.
 For nonlinear systems such as the SIR model, the improved robustness of higher-order methods makes RK4 the most effective method overall \cite{19}.
 Additional simulations with varying initial conditions and reproduction numbers (see Appendix) further confirmed sensitivity to model parameters and robustness of RK4.
-
+\newpage{}
 \section{Conclusion}
 
 This report evaluated Euler, RK2, and RK4 methods for solving ordinary differential equations. The benchmark problem confirmed theoretical convergence behaviour, while the SIR model demonstrated performance on a nonlinear coupled system.
@@ -839,7 +853,7 @@ function sir(t, S, I, R, beta, gamma)
 end
 \end{verbatim}
 
-The system was solved using RK4 by applying the update scheme component-wise.
+The system was solved using Euler, RK2, and RK4 methods, applying the update scheme component-wise.
 
 \subsection{Extended SIR Simulations}
 

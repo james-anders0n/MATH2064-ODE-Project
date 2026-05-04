@@ -1,8 +1,8 @@
-PWD /Users/rileymarriott/Desktop/MATH2064-ODE-Project
+PWD /Users/rileymarriott/Desktop/UNI/2026/Numerical Methods/MATH2064-ODE-Project
 INPUT /usr/local/texlive/2026/texmf.cnf
 INPUT /usr/local/texlive/2026/texmf-dist/web2c/texmf.cnf
 INPUT /usr/local/texlive/2026/texmf-var/web2c/pdftex/pdflatex.fmt
-INPUT /Users/rileymarriott/Desktop/MATH2064-ODE-Project/Project improved.tex
+INPUT /Users/rileymarriott/Desktop/UNI/2026/Numerical Methods/MATH2064-ODE-Project/Project improved.tex
 OUTPUT Project improved.log
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/base/article.cls
 INPUT /usr/local/texlive/2026/texmf-dist/tex/latex/base/article.cls
@@ -199,8 +199,6 @@ OUTPUT Project improved.toc
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmbx12.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/jknappen/ec/tcrm1000.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmbx7.tfm
-INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmbx5.tfm
 INPUT ./comparison_plot.png
 INPUT ./comparison_plot.png
 INPUT ./comparison_plot.png
@@ -221,11 +219,11 @@ INPUT ./error_vs_function_evaluations.png
 INPUT ./error_vs_function_evaluations.png
 INPUT ./error_vs_function_evaluations.png
 INPUT ./error_vs_function_evaluations.png
-INPUT ./sir_rk4.png
-INPUT ./sir_rk4.png
-INPUT ./sir_rk4.png
-INPUT ./sir_rk4.png
-INPUT ./sir_rk4.png
+INPUT ./sir_comparison.png
+INPUT ./sir_comparison.png
+INPUT ./sir_comparison.png
+INPUT ./sir_comparison.png
+INPUT ./sir_comparison.png
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmti10.tfm
 INPUT /usr/local/texlive/2026/texmf-dist/fonts/tfm/public/cm/cmtt10.tfm
 INPUT ./sir_initial_conditions.png
