@@ -548,17 +548,17 @@ Figure~\ref{fig:convergence} shows convergence on a log--log scale, with slopes 
 \end{figure}
 These results confirm that higher-order methods achieve significantly greater accuracy for a given step size. In practical terms, RK4 can therefore use larger time steps than Euler while still maintaining a low error, making it more efficient when accuracy is important.
 \subsection{Computational Time Comparison}
-Computational cost was evaluated using the benchmark problem. Figure~\ref{fig:timing_comparison} shows that Euler is fastest, followed by RK2 and RK4, reflecting the number of function evaluations per step.
+Computational cost was evaluated using the benchmark problem. Figure~\ref{fig:timing_comparison} shows that Euler is fastest, followed by RK2 and RK4, reflecting the number of function evaluations per step. Although the absolute runtimes are small, the relative increase reflects the additional function evaluations required by higher-order methods.
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.62\textwidth]{timing_comparison.png}
+\includegraphics[width=0.60\textwidth]{timing_comparison.png}
 \caption{Execution time of Euler, RK2, and RK4 methods for the benchmark problem, illustrating increased computational cost with additional function evaluations per step.}
 \label{fig:timing_comparison}
 \end{figure}
-However, runtime alone does not reflect efficiency. Figure~\ref{fig:error_fevals} compares error against total function evaluations, showing that RK4 achieves significantly lower error for a given computational effort, with RK2 also outperforming Euler.
+However, computational efficiency depends on both runtime and achieved accuracy. Figure~\ref{fig:error_fevals} compares error against total function evaluations, showing that RK4 achieves significantly lower error for a given computational effort, with RK2 also outperforming Euler.
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.62\textwidth]{error_vs_function_evaluations.png}
+\includegraphics[width=0.56\textwidth]{error_vs_function_evaluations.png}
 \caption{Maximum global error as a function of total function evaluations, demonstrating the improved efficiency of higher-order methods.}
 \label{fig:error_fevals}
 \end{figure}
@@ -568,33 +568,35 @@ Thus, although higher-order methods are more expensive per step, they are more e
 
 The SIR model was solved using Euler, RK2, and RK4 methods with
 \[
-\beta = 0.35, \quad \gamma = 0.10,
+\beta = 0.35, \qquad \gamma = 0.10,
 \]
 and initial conditions
 \[
-S_0 = 0.95, \quad I_0 = 0.05, \quad R_0 = 0.
+S_0 = 0.95, \qquad I_0 = 0.05, \qquad R_0 = 0.
 \]
 
-All three methods were applied over the interval $[0,160]$ using a fixed step size of $h = 0.5$, allowing direct comparison of their performance on a nonlinear coupled system.
+To investigate step-size sensitivity and numerical stability, Euler, RK2, and RK4 methods were applied over the interval $[0,160]$ using a relatively coarse step size of $h = 5.0$. Since the nonlinear SIR system does not possess a simple analytical solution, a fine-step RK4 solution with $h = 0.01$ was used as a reference.
 
 \begin{figure}[H]
-\centering
-\includegraphics[width=0.62\textwidth]{sir_comparison.png}
-\caption{Comparison of Euler, RK2, and RK4 methods for the SIR model, showing the infected population over time.}
+    \centering
+    \includegraphics[width=0.65\textwidth]{sir_stepsize_comparison.png}
+    \caption{Comparison of Euler, RK2, and RK4 methods for the SIR model using $h = 5.0$, together with a fine-step RK4 reference solution using $h = 0.01$.}
+    \label{fig:sir_stepsize_comparison}
 \end{figure}
 
-Figure 9 shows the evolution of the infected population computed using each numerical method. Euler’s method produces a solution that is close to the higher-order methods for the chosen step size, although small differences are visible near the peak infection. These differences arise from its lower accuracy and sensitivity to step size, which become more pronounced for larger time steps or more rapidly varying systems.
+Figure \ref{fig:sir_stepsize_comparison} shows the evolution of the infected population computed using each numerical method. At the coarse step size, clear differences emerge between the methods. Euler’s method exhibits the largest deviation from the reference solution, particularly near the infection peak, due to the accumulation of global error and its lower-order approximation. This behaviour reflects the assumption of constant slope over each time step, which becomes increasingly inaccurate when the solution changes rapidly.
 
-The RK2 method improves upon this behaviour, capturing the overall trend more accurately and reducing the error in peak prediction. RK2 provides results that closely align with RK4, improving accuracy relative to Euler while maintaining similar overall behaviour.
+The RK2 method improves upon Euler's method, but noticeable differences in the peak height and timing remain when the coarse step size is used.
 
-In contrast, the RK4 method produces a smooth and stable solution that closely represents the expected dynamics of the system. The infected population increases rapidly, reaches a peak of approximately $I_{\max} \approx 0.36$ at $t \approx 25$, and then declines as the recovered population increases. This behaviour is consistent with the basic reproduction number
+In contrast, the RK4 method remains very close to the fine-step reference solution even when using the much larger step size. The additional intermediate slope evaluations allow RK4 to capture the nonlinear dynamics of the system more accurately, producing a smooth and stable approximation of the epidemic evolution.
+
+The infected population increases rapidly, reaches a peak of approximately $I_{\max} \approx 0.36$ at $t \approx 25$, and then decreases as the recovered population increases. This behaviour is consistent with the basic reproduction number
 \[
 R_0 = \frac{\beta}{\gamma} = 3.5 > 1,
 \]
-indicating initial growth of the epidemic.
+which predicts initial epidemic growth.
 
-The simulation also shows that the SIR model is sensitive to its parameters and initial conditions. The transmission rate $\beta$ controls how quickly susceptible individuals become infected, while the recovery rate $\gamma$ controls how quickly infected individuals move into the recovered group. Increasing $\beta$ or decreasing $\gamma$ increases the basic reproduction number $R_0$, leading to a larger and faster outbreak. Similarly, changing the initial infected population affects how quickly the epidemic peak is reached.
-The comparison demonstrates that higher-order methods are more reliable for nonlinear systems such as the SIR model, where small numerical errors can significantly affect the dynamics. While Euler’s method is computationally inexpensive, its reduced accuracy limits its usefulness for such problems. RK2 provides a reasonable compromise, but RK4 offers the best overall performance in terms of accuracy and stability.
+The comparison demonstrates that higher-order methods are more reliable for nonlinear coupled systems such as the SIR model, particularly when larger time steps are used. While Euler’s method is computationally inexpensive, its reduced accuracy limits its usefulness for problems where numerical stability and accurate peak prediction are important. RK2 provides improved accuracy at moderate computational cost, while RK4 offers the best overall balance between stability, accuracy, and efficiency.
 
 \subsection{Validation of the Numerical Solution}
 
@@ -603,7 +605,7 @@ An important property of the SIR model is conservation of total population:
 S(t) + I(t) + R(t) = 1.
 \]
 
-The solution satisfied this condition with deviation less than $10^{-12}$, confirming numerical stability and correctness \cite{6}.
+The solution satisfied this condition with deviation less than $10^{-12}$, confirming that the numerical implementation preserved the model's conservation property~\cite{6}.
 
 \subsection{Overall Comparison}
 The results demonstrate the trade-off between computational cost and accuracy, with RK4 generally providing the highest accuracy and stability.
@@ -895,7 +897,7 @@ The conservation condition
 \[
 S(t) + I(t) + R(t) = 1
 \]
-was satisfied with deviations less than $10^{-12}$, confirming numerical correctness.
+was satisfied with deviations less than $10^{-12}$, confirming preservation of the model's conservation property.
 
 \subsection{Implementation Considerations}
 
